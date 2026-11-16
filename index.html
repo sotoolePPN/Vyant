@@ -297,6 +297,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
       <div class="item"><button data-go="resources" aria-haspopup="true">Resources</button>
         <div class="menu">
           <a href="#resources" data-sec="r-dev"><strong>Developer portal</strong><span>API reference, SDK, sandbox, webhooks</span></a>
+          <a href="#resources" data-sec="r-toolkit"><strong>Launch toolkit</strong><span>Best practices and templates to get started</span></a>
           <a href="#resources" data-sec="r-guides"><strong>Guides</strong><span>Launching and growing an embedded capital program</span></a>
           <a href="#resources" data-sec="r-guides"><strong>Insights</strong><span>Research and writing on SMB credit</span></a>
           <a href="#resources" data-sec="r-trust"><strong>Security and compliance</strong><span>How data and decisions are handled</span></a>
@@ -390,11 +391,11 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="head">
         <h2>One application unlocks multiple lenders</h2>
-        <p class="lede">Vyant's multi-lender orchestration model ensures more of your customers get approved with larger offers, ensuring your program is not capped by one balance sheet.</p>
+        <p class="lede">Vyant's multi-lender orchestration model means more of your customers get approved with larger offers, so your program is not capped by one balance sheet.</p>
       </div>
       <div class="tablewrap">
         <table class="cmp">
-          <thead><tr><th></th><th class="o">One embedded lender</th><th class="v">Vyant multi-lender model</th></tr></thead>
+          <thead><tr><th></th><th class="o">One embedded lender</th><th class="v">Vyant multi-lender orchestration</th></tr></thead>
           <tbody>
             <tr><th>Approvals</th><td class="o">Limited by credit box</td><td class="v">More lenders yields higher approvals</td></tr>
             <tr><th>Offer size</th><td class="o">Limited by the lender's concentration limits</td><td class="v">More lenders equals more credit capacity</td></tr>
@@ -411,7 +412,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="head">
         <h2>Your customers design the capital stack that fits them</h2>
-        <p class="lede">Most businesses need more than one kind of financing.<br>Our AI Capital Advisor leverages customer sales, banking and accounting data and proposes a financing stack designed for the business's current and future needs. Customers adjust to fit their needs.</p>
+        <p class="lede">Most businesses need more than one kind of financing.<br>Our AI Capital Advisor leverages customer sales, banking and accounting data and proposes a financing stack designed for the business's current and future needs. Customers can then adjust the stack to suit them.</p>
       </div>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
         <div class="plain" style="border-color:var(--l2)"><h4>Revenue-based loans</h4><p>Repaid from revenue.</p></div>
@@ -429,7 +430,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="head">
         <h2>One integration. Live in as little as 2 weeks.</h2>
-        <p class="lede">Choose the setup that fits your team. Migrate anytime.<br>Use our toolkit with best practices and templates to get started.</p>
+        <p class="lede">Choose the setup that fits your team. Migrate anytime.<br>Use our <a href="#resources" data-sec="r-toolkit">launch toolkit</a> with best practices and templates to get started.</p>
       </div>
       <div class="launch">
         <article>
@@ -464,29 +465,29 @@ POST /v1/offers/{id}/accept</code></div>
 
   <div class="band">
     <div class="wrap">
-      <div class="head"><h2>How a financing moves through Vyant</h2></div>
+      <div class="head"><h2>Apply in 10 minutes. Get funded in as little as 2 days.</h2></div>
       <ol class="steps">
-        <li><h4>Data comes in</h4><p>Platform transactions, banking, credit and accounting data replace paperwork.</p></li>
-        <li><h4>The Advisor builds the stack</h4><p>Products and amounts are sized to the business's cash flows.</p></li>
-        <li><h4>Lenders are matched</h4><p>Each need goes to the lender programs whose credit box fits it.</p></li>
-        <li><h4>Funded and recorded</h4><p>The customer compares offers and accepts in your platform, with funding in as little as 2 days.</p></li>
+        <li><h4>Customer connects their data</h4><p>Platform transactions, banking, credit and accounting data replace paperwork.</p></li>
+        <li><h4>AI Advisor evaluates needs</h4><p>Products and amounts are sized to the business's cash flows.</p></li>
+        <li><h4>Orchestration of lenders &amp; products</h4><p>Each need goes to the lender programs whose credit box fits it.</p></li>
+        <li><h4>Fast closing and funding</h4><p>The customer compares offers and accepts in your platform, with funding in as little as 2 days.</p></li>
       </ol>
     </div>
   </div>
 
   <div class="band tint">
     <div class="wrap">
-      <div class="head"><h2>Capital to power growth for you and your customers</h2></div>
+      <div class="head"><h2>Vyant powers growth for you and your customers</h2></div>
       <div class="grid g2">
         <div class="card"><h3>For your platform</h3><ul class="ticks">
+          <li>Offer more financing options than competing platforms</li>
           <li>Earn a revenue share, with no credit risk</li>
-          <li>Lenders handle compliance</li>
           <li>Improve customer retention</li>
-          <li>Offer more financing options than competing platforms</li></ul></div>
+          <li>Lenders handle compliance</li></ul></div>
         <div class="card"><h3>For your customers</h3><ul class="ticks">
           <li>Financing inside the platform they already use</li>
           <li>One application, multiple offers</li>
-          <li>Offers matched to their business data, at competitive terms</li>
+          <li>Offers matched to their business, at competitive terms</li>
           <li>Approved and funded in as little as 2 days</li></ul></div>
       </div>
     </div>
@@ -723,7 +724,8 @@ POST /v1/offers/{id}/accept</code></div>
   </div></div>
   <div class="band" id="r-guides"><div class="wrap">
     <div class="head"><h2>Guides and insights</h2></div>
-    <div class="grid g3">
+    <div class="grid g2">
+      <div class="card" id="r-toolkit" style="scroll-margin-top:90px"><h3>Launch toolkit</h3><p>Best practices and templates for getting started: where to place offers in your platform, how to announce the program to customers, and what to measure after launch.</p></div>
       <div class="card"><h3>Launching embedded capital</h3><p>Choosing an integration path, placing offers in your platform, and what to measure in the first 90 days.</p></div>
       <div class="card"><h3>One lender or many</h3><p>How approval rates, offer sizes and product range change when a panel stands behind your program.</p></div>
       <div class="card"><h3>The small business capital stack</h3><p>Which financing fits which need, written for product teams rather than credit officers.</p></div>
