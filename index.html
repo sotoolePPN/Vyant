@@ -195,8 +195,11 @@ table.cmp{border-collapse:separate;border-spacing:0;min-width:640px;font-size:1r
 .fan{height:22px;margin-left:44px;border-left:2px solid var(--line)}
 
 /* launch options */
-.launch{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
-.launch article{padding:28px;display:grid;gap:14px;align-content:start;border-right:1px solid var(--line)}
+.launch{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(6,auto);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.launch article{padding:28px;display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:14px;border-right:1px solid var(--line)}
+.launch article>p{font-size:.97rem}
+.kv{font-size:.93rem;border-top:1px solid var(--line);padding-top:12px}
+.kv span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:2px}
 .launch article:last-child{border-right:0}
 .launch dl{margin:0;display:grid;gap:10px;font-size:.93rem}
 .launch dt{color:var(--muted);font-size:.8rem}
@@ -205,11 +208,11 @@ table.cmp{border-collapse:separate;border-spacing:0;min-width:640px;font-size:1r
 .effort i{width:26px;height:8px;border-radius:2px;background:var(--line)}
 .effort i.f{background:var(--brand)}
 .effort span{margin-left:8px;font-weight:600;font-size:.9rem}
-.mock{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:12px;font-size:.78rem;display:grid;gap:6px;min-height:96px;align-content:start}
+.mock{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:12px;font-size:.78rem;display:grid;gap:6px;height:104px;align-content:center;overflow:hidden}
 .mock .u{height:8px;border-radius:2px;background:var(--line)}
 .mock .p{height:22px;border-radius:5px;background:var(--brand);width:46%}
 .mock code{font:500 .76rem ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow-x:auto;display:block;color:var(--ink)}
-@media (max-width:900px){.launch{grid-template-columns:1fr}.launch article{border-right:0;border-bottom:1px solid var(--line)}.launch article:last-child{border-bottom:0}}
+@media (max-width:900px){.launch{grid-template-columns:1fr;grid-template-rows:none}.launch article{grid-row:auto;grid-template-rows:none;border-right:0;border-bottom:1px solid var(--line)}.launch article:last-child{border-bottom:0}}
 
 /* steps */
 ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:s}
@@ -386,18 +389,18 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
   <div class="band line" id="h-multi">
     <div class="wrap">
       <div class="head">
-        <h2>A panel of lenders behind one application</h2>
-        <p class="lede">When one lender's credit box says no, the application keeps moving. More of your customers get approved, the offers are larger, and the capital behind your program is not capped by one balance sheet.</p>
+        <h2>One application unlocks multiple lenders</h2>
+        <p class="lede">Vyant's multi-lender orchestration model ensures more of your customers get approved with larger offers, ensuring your program is not capped by one balance sheet.</p>
       </div>
       <div class="tablewrap">
         <table class="cmp">
-          <thead><tr><th></th><th class="o">One embedded lender</th><th class="v">Vyant lender panel</th></tr></thead>
+          <thead><tr><th></th><th class="o">One embedded lender</th><th class="v">Vyant multi-lender model</th></tr></thead>
           <tbody>
-            <tr><th>Approvals</th><td class="o">One credit box decides</td><td class="v">Each application is checked against every matching program</td></tr>
-            <tr><th>Offer size</th><td class="o">Limited by one lender's appetite</td><td class="v">Lenders compete, and offers can be combined</td></tr>
-            <tr><th>Products</th><td class="o">Usually one</td><td class="v">Five, from lines of credit to invoice financing</td></tr>
-            <tr><th>Capital supply</th><td class="o">One balance sheet</td><td class="v">Banks, fintech lenders and private credit</td></tr>
-            <tr><th>Your integration</th><td class="o">One per lender</td><td class="v">One, for the whole panel</td></tr>
+            <tr><th>Approvals</th><td class="o">Limited by credit box</td><td class="v">More lenders yields higher approvals</td></tr>
+            <tr><th>Offer size</th><td class="o">Limited by the lender's concentration limits</td><td class="v">More lenders equals more credit capacity</td></tr>
+            <tr><th>Products</th><td class="o">Usually one</td><td class="v">Multiple products to fit customer needs</td></tr>
+            <tr><th>Capital supply</th><td class="o">One balance sheet</td><td class="v">Access capital from banks, fintech lenders and private credit firms</td></tr>
+            <tr><th>Your integration</th><td class="o">Multiple lenders, multiple integrations</td><td class="v">One integration to access multiple lenders</td></tr>
           </tbody>
         </table>
       </div>
@@ -408,7 +411,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="head">
         <h2>Your customers design the capital stack that fits them</h2>
-        <p class="lede">Most businesses need more than one kind of financing. The AI Capital Advisor reads sales, banking and accounting data, proposes a stack sized to the business's cash cycle, and the customer adjusts it before lenders fill it with offers.</p>
+        <p class="lede">Most businesses need more than one kind of financing.<br>Our AI Capital Advisor leverages customer sales, banking and accounting data and proposes a financing stack designed for the business's current and future needs. Customers adjust to fit their needs.</p>
       </div>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
         <div class="plain" style="border-color:var(--l2)"><h4>Revenue-based loans</h4><p>Repaid from revenue.</p></div>
@@ -426,31 +429,34 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="head">
         <h2>One integration. Live in as little as 2 weeks.</h2>
-        <p class="lede">Connect once to reach multiple lenders and financing products. Choose the setup that fits your team. You can move from one to the next later.</p>
+        <p class="lede">Choose the setup that fits your team. Migrate anytime.<br>Use our toolkit with best practices and templates to get started.</p>
       </div>
       <div class="launch">
         <article>
           <div class="mock" aria-hidden="true"><div class="u" style="width:40%"></div><div class="u" style="width:80%"></div><div class="u" style="width:65%"></div><div class="p"></div></div>
           <h3>Hosted</h3>
-          <p class="muted">A branded financing site, hosted by Vyant. Send customers there from a link, banner or email.</p>
+          <p class="muted">A branded financing site, hosted by Vyant and reached from a link in your platform.</p>
           <div class="effort" aria-label="Engineering effort: none"><i></i><i></i><i></i><span>No code</span></div>
-          <dl><div><dt>You build</dt><dd>A link in your platform</dd></div><div><dt>Best for</dt><dd>Proving demand before committing a team</dd></div></dl>
+          <div class="kv"><span>You build</span>A link, banner or email</div>
+          <div class="kv"><span>Best for</span>Proving demand before committing a team</div>
         </article>
         <article>
           <div class="mock" aria-hidden="true"><div class="u" style="width:30%"></div><div style="border:1.5px dashed var(--brand);border-radius:6px;padding:8px;display:grid;gap:5px"><div class="u" style="width:70%"></div><div class="p"></div></div></div>
           <h3>SDK</h3>
           <p class="muted">Embed prebuilt financing components in your platform, styled to your brand.</p>
           <div class="effort" aria-label="Engineering effort: light"><i class="f"></i><i></i><i></i><span>Low code</span></div>
-          <dl><div><dt>You build</dt><dd>Component placement and theming</dd></div><div><dt>Best for</dt><dd>A native experience without building lending screens</dd></div></dl>
+          <div class="kv"><span>You build</span>Component placement and theming</div>
+          <div class="kv"><span>Best for</span>A native feel with little build</div>
         </article>
         <article>
           <div class="mock" aria-hidden="true"><code>POST /v1/applications
 GET  /v1/offers
 POST /v1/offers/{id}/accept</code></div>
           <h3>API</h3>
-          <p class="muted">Design the full experience to match your platform, on one API for applications, data and offers.</p>
+          <p class="muted">Design the full experience to match your platform, on one API.</p>
           <div class="effort" aria-label="Engineering effort: full build"><i class="f"></i><i class="f"></i><i class="f"></i><span>Fully custom</span></div>
-          <dl><div><dt>You build</dt><dd>The complete customer journey</dd></div><div><dt>Best for</dt><dd>Platforms that want total control of the experience</dd></div></dl>
+          <div class="kv"><span>You build</span>The complete customer journey</div>
+          <div class="kv"><span>Best for</span>Total control of the experience</div>
         </article>
       </div>
     </div>
