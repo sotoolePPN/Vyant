@@ -126,6 +126,14 @@ ul.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;heig
 .layer span{font-size:.75rem;opacity:.9;font-variant-numeric:tabular-nums}
 .layer[data-k="abl"]{background:var(--l4)} .layer[data-k="term"]{background:var(--l3)}
 .layer[data-k="inv"]{background:var(--l2)} .layer[data-k="loc"]{background:var(--l1)}
+.layer.in{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.prog{height:3px;border-radius:2px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--brand)}
+.prog.run i{animation:prog 4.8s linear forwards}
+.prog.off{visibility:hidden}
+@keyframes prog{to{width:100%}}
+@media (prefers-reduced-motion:reduce){.layer.in{animation:none}.prog{display:none}}
 .empty{border:1.5px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted);font-size:.9rem}
 .picks{display:grid;gap:8px}
 .pick{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:7px 9px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.82rem;line-height:1.3}
@@ -312,21 +320,20 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
       <div class="copy">
         <p class="kicker">Capital Infrastructure for platforms</p>
         <h1>Unlock the Capital Stack for your Customers.</h1>
-        <p class="lede">Don't let limited financing options stall your customers' growth. Vyant's multi-lender platform gives them access to more lenders and funding options through one application, embedded inside your product. Earn a new revenue stream with no risk of credit losses.</p>
+        <p class="lede">Don't let limited financing options stall your customers' growth. Vyant's multi-lender platform gives them access to more lenders and funding options through one application, embedded inside your platform. Earn a new revenue stream with no risk of credit losses.</p>
         <div class="row">
           <a class="btn" href="#" data-sec="contact">Book a 20-minute demo</a>
-          <a class="btn ghost" href="#home" data-sec="h-launch">See how you launch</a>
+          <a class="btn ghost" href="#home" data-sec="h-launch">Go Live Options</a>
         </div>
       </div>
 
       <div class="builder" aria-label="Capital stack example">
         <div>
-          <h4>One application, one capital stack</h4>
-          <p class="small muted">Pick a business and choose what it needs. Each layer is funded by a different lender.</p>
-        </div>
+          <h4>One application, one capital stack</h4>        </div>
         <div class="seg" id="biz" role="group" aria-label="Example business"></div>
+        <div class="prog" id="prog" aria-hidden="true"><i></i></div>
         <div class="bwrap">
-          <div class="stack" id="stack" aria-live="polite"></div>
+          <div class="stack" id="stack"></div>
           <div class="picks" id="picks"></div>
         </div>
         <div class="total">
@@ -829,20 +836,21 @@ POST /v1/offers/{id}/accept</code></div>
   ];
   var biz={
     retail:{label:'Online retailer', amt:{loc:150,inv:220,term:180,abl:120}, on:['loc','inv','term']},
-    rest:{label:'Restaurant group', amt:{loc:80,inv:40,term:250,abl:0}, on:['loc','term']},
+    rest:{label:'Restaurant', amt:{loc:80,inv:40,term:250,abl:0}, on:['loc','term']},
     dist:{label:'Wholesale distributor', amt:{loc:200,inv:350,term:150,abl:600}, on:['loc','inv','abl']}
   };
   var cur='retail', on={};
   var elBiz=document.getElementById('biz'), elStack=document.getElementById('stack'), elPicks=document.getElementById('picks');
   function money(k){return k>=1000?'$'+(k/1000).toFixed(2).replace(/0$/,'')+'M':'$'+k+'K'}
-  function setBiz(id){cur=id;on={};biz[id].on.forEach(function(k){on[k]=true});render()}
+  var anim=false;
+  function setBiz(id){cur=id;on={};biz[id].on.forEach(function(k){on[k]=true});anim=true;render();anim=false}
   function render(){
     elBiz.innerHTML='';
     Object.keys(biz).forEach(function(id){
       var b=document.createElement('button');b.type='button';b.textContent=biz[id].label;
-      b.setAttribute('aria-pressed',id===cur);b.onclick=function(){setBiz(id)};elBiz.appendChild(b);
+      b.setAttribute('aria-pressed',id===cur);b.onclick=function(){stopAuto();setBiz(id)};elBiz.appendChild(b);
     });
-    var a=biz[cur].amt,total=0,n=0;
+    var a=biz[cur].amt,total=0,n=0,made=[];
     elStack.innerHTML='';elPicks.innerHTML='';
     products.forEach(function(p){
       var avail=a[p.k]>0;
@@ -851,21 +859,44 @@ POST /v1/offers/{id}/accept</code></div>
         var d=document.createElement('div');d.className='layer';d.dataset.k=p.k;
         d.style.height=Math.min(84,44+a[p.k]*0.07)+'px';
         d.innerHTML='<strong>'+p.name+'</strong><span>'+money(a[p.k])+', '+p.lender+'</span>';
-        elStack.appendChild(d);
+        elStack.appendChild(d);made.push(d);
       }
     });
+    if(anim&&!reduce){made.forEach(function(d,i){d.classList.add('in');d.style.animationDelay=((made.length-1-i)*160)+'ms'})}
     if(!n){elStack.innerHTML='<div class="empty">Choose at least one need to build a stack.</div>'}
     products.slice().reverse().forEach(function(p){
       var avail=a[p.k]>0;
       var l=document.createElement('label');l.className='pick'+(avail?'':' off');
       l.innerHTML='<input type="checkbox" id="pk-'+p.k+'"'+(on[p.k]&&avail?' checked':'')+(avail?'':' disabled')+'><span>'+p.why+'<small>'+(avail?p.name+', up to '+money(a[p.k]):'No invoices to finance for this business')+'</small></span>';
-      l.querySelector('input').onchange=function(e){on[p.k]=e.target.checked;render()};
+      l.querySelector('input').onchange=function(e){stopAuto();on[p.k]=e.target.checked;render()};
       elPicks.appendChild(l);
     });
-    document.getElementById('total').textContent=money(total);
+    countTo(total,anim&&!reduce);
     document.getElementById('totalnote').textContent=n?n+(n===1?' product from 1 lender':' products from '+n+' lenders')+', one application':'No products selected';
   }
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var elTotal=document.getElementById('total'),raf=0;
+  function countTo(v,animate){
+    cancelAnimationFrame(raf);
+    if(!animate){elTotal.textContent=money(v);return}
+    var t0=performance.now(),dur=900;
+    (function step(t){var k=Math.min(1,(t-t0)/dur);k=1-Math.pow(1-k,3);
+      elTotal.textContent=money(Math.round(v*k/10)*10);
+      if(k<1) raf=requestAnimationFrame(step); else elTotal.textContent=money(v);})(t0);
+  }
+  /* motion banner: cycles through the example businesses until the visitor takes over */
+  var prog=document.getElementById('prog'),timer=0,stopped=reduce,order=Object.keys(biz);
+  function runProg(){prog.classList.remove('run');void prog.offsetWidth;prog.classList.add('run')}
+  function tick(){setBiz(order[(order.indexOf(cur)+1)%order.length]);runProg()}
+  function startAuto(){if(stopped||timer)return;runProg();timer=setInterval(tick,4800)}
+  function pauseAuto(){clearInterval(timer);timer=0;prog.classList.remove('run')}
+  function stopAuto(){stopped=true;pauseAuto();prog.classList.add('off')}
+  var bEl=document.querySelector('.builder');
+  bEl.addEventListener('mouseenter',pauseAuto);bEl.addEventListener('mouseleave',startAuto);
+  bEl.addEventListener('focusin',pauseAuto);
+  document.addEventListener('visibilitychange',function(){document.hidden?pauseAuto():startAuto()});
   setBiz('retail');
+  if(reduce) prog.classList.add('off'); else startAuto();
 
   document.getElementById('lead').addEventListener('submit',function(e){
     e.preventDefault();
