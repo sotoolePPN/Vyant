@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vyant Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: left-aligned editorial columns on a cool blue-grey ground; the one loud element is the
+   capital stack, four strata in four lender colours, which recurs as the brand's visual signature. */
+:root{
+  --bg:#F4F5F9; --surface:#FFFFFF; --tint:#E7EBF6; --ink:#0E1B3D; --muted:#56607A; --line:#D3D8E5;
+  --brand:#2F5BEA; --brand-ink:#FFFFFF;
+  --l1:#1D3FAF; --l2:#E08A1E; --l3:#1E9BC9; --l4:#7A4FD6; --on-layer:#FFFFFF;
+  --display:"Inter","Helvetica Neue",Arial,system-ui,sans-serif;
+  --body:"Inter","Helvetica Neue",Arial,system-ui,sans-serif;
+  --wrap:1160px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0A1124; --surface:#111A33; --tint:#17223F; --ink:#E8ECF7; --muted:#9AA6C2; --line:#263457;
+    --brand:#7C9BFF; --brand-ink:#0A1124;
+    --l1:#6F8DFA; --l2:#F0B04F; --l3:#5CC3E8; --l4:#A98BF0; --on-layer:#0A1124;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0A1124; --surface:#111A33; --tint:#17223F; --ink:#E8ECF7; --muted:#9AA6C2; --line:#263457;
+  --brand:#7C9BFF; --brand-ink:#0A1124;
+  --l1:#6F8DFA; --l2:#F0B04F; --l3:#5CC3E8; --l4:#A98BF0; --on-layer:#0A1124;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
+body{font-feature-settings:'cv11','ss03';margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-0.02em;line-height:1.08}
+h1{font-size:clamp(2.4rem,5.2vw,4.1rem);font-weight:800;letter-spacing:-0.045em;line-height:1.02}
+h2{font-size:clamp(1.75rem,3.2vw,2.55rem);font-weight:700;letter-spacing:-0.035em}
+h3{font-size:1.3rem;font-weight:600;line-height:1.2}
+h4{font-size:1.02rem;font-weight:600;letter-spacing:-0.01em;line-height:1.25}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--l3);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.lede{font-size:1.2rem;color:var(--muted);max-width:56ch}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.btn{display:inline-block;font:600 1rem var(--body);padding:.8em 1.25em;border-radius:999px;border:1.5px solid var(--brand);background:var(--brand);color:var(--brand-ink);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn:hover{filter:brightness(1.1)}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+
+/* header */
+header.site{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:28px;height:68px}
+.mark{font:700 1.55rem var(--display);letter-spacing:-0.04em;text-decoration:none;display:flex;align-items:center;gap:9px}
+.mark i{display:grid;gap:2px;width:18px}
+.mark i b{display:block;height:4px;border-radius:1px}
+.mark i b:nth-child(1){background:var(--l4);width:55%}
+.mark i b:nth-child(2){background:var(--l3);width:75%}
+.mark i b:nth-child(3){background:var(--l2);width:90%}
+.mark i b:nth-child(4){background:var(--l1);width:100%}
+nav.main{display:flex;gap:2px;flex:1}
+.item{position:relative}
+.item>button{font:500 .98rem var(--body);background:none;border:0;color:var(--ink);padding:10px 12px;border-radius:8px;cursor:pointer}
+.item>button[aria-current="page"]{background:var(--tint)}
+.menu{display:none;position:absolute;top:100%;left:0;width:330px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 18px 40px -18px rgba(14,27,61,.35)}
+.item:hover .menu,.item:focus-within .menu,.item.open .menu{display:block}
+.menu a{display:block;padding:9px 12px;border-radius:9px;text-decoration:none}
+.menu a:hover{background:var(--tint)}
+.menu a strong{display:block;font-weight:600;font-size:.96rem}
+.menu a span{display:block;font-size:.84rem;color:var(--muted);line-height:1.35}
+#burger{display:none;margin-left:auto;font:600 .95rem var(--body);background:none;border:1.5px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+@media (max-width:900px){
+  #burger{display:block}
+  .bar .btn{display:none}
+  nav.main{display:none;position:absolute;top:68px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;padding:8px 16px 16px;max-height:calc(100vh - 68px);overflow:auto}
+  nav.main.open{display:flex}
+  .item>button{width:100%;text-align:left;font-weight:600}
+  .menu{display:block;position:static;width:auto;border:0;box-shadow:none;background:none;padding:0 0 6px 8px}
+  .menu a span{display:none}
+}
+
+/* sections */
+main>section[data-view]{display:none}
+main>section[data-view].on{display:block}
+.band{padding:84px 0}
+.band.tint{background:var(--tint)}
+.band.line{border-top:1px solid var(--line)}
+.head{display:grid;gap:14px;margin-bottom:44px;max-width:62ch}
+.pagehead{padding-top:72px;padding-bottom:56px}
+.pagehead h1{font-size:clamp(2.2rem,4.6vw,3.6rem);max-width:18ch}
+.pagehead .lede{margin-top:18px}
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr} .band{padding:60px 0}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:10px;align-content:start}
+.card p{color:var(--muted);font-size:.97rem}
+.plain{display:grid;gap:8px;align-content:start;padding-top:18px;border-top:2px solid var(--ink)}
+.plain p{color:var(--muted);font-size:.97rem}
+ul.ticks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.ticks li{padding-left:22px;position:relative;font-size:.97rem}
+ul.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;height:6px;border-left:2px solid var(--brand);border-bottom:2px solid var(--brand);transform:rotate(-45deg)}
+
+/* hero */
+.hero{padding:64px 0 76px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero .copy{display:grid;gap:24px}
+@media (max-width:980px){.hero .wrap{grid-template-columns:1fr;gap:40px}}
+
+/* stack builder */
+.builder{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:18px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 .88rem var(--body);padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.bwrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end}
+@media (max-width:520px){.bwrap{grid-template-columns:1fr}}
+.stack{display:flex;flex-direction:column;gap:3px;justify-content:flex-end;min-height:330px}
+.layer{color:var(--on-layer);border-radius:6px;padding:9px 12px;display:flex;flex-direction:column;justify-content:center;transition:height .35s ease;overflow:hidden;line-height:1.2}
+.layer strong{font:600 .98rem var(--display)}
+.layer span{font-size:.8rem;opacity:.9;font-variant-numeric:tabular-nums}
+.layer[data-k="abl"]{background:var(--l4)} .layer[data-k="term"]{background:var(--l3)}
+.layer[data-k="inv"]{background:var(--l2)} .layer[data-k="loc"]{background:var(--l1)}
+.empty{border:1.5px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted);font-size:.9rem}
+.picks{display:grid;gap:8px}
+.pick{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:9px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.9rem;line-height:1.3}
+.pick input{margin-top:3px;accent-color:var(--brand);width:16px;height:16px}
+.pick small{display:block;color:var(--muted);font-size:.8rem}
+.pick.off{opacity:.55;cursor:not-allowed}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line);padding-top:14px;flex-wrap:wrap}
+.total b{font:700 2rem var(--display);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+
+/* capital infrastructure diagram */
+.kicker{font-weight:600;color:var(--brand);font-size:1rem}
+.infra{display:grid;gap:10px}
+.infra .end{border:1.5px dashed var(--line);border-radius:12px;padding:14px 20px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;justify-content:space-between}
+.infra .end b{font-weight:700}
+.infra .end span{color:var(--muted);font-size:.93rem}
+.infra .core{background:var(--ink);color:var(--bg);border-radius:20px;padding:26px}
+.infra .core>h3{font-size:1.05rem;font-weight:600;opacity:.75;margin-bottom:16px}
+.infra .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.infra .tier{background:var(--surface);color:var(--ink);border-radius:14px;padding:22px;display:grid;gap:12px;align-content:start;border-top:5px solid var(--brand)}
+.infra .tier:nth-child(2){border-top-color:var(--l2)} .infra .tier:nth-child(3){border-top-color:var(--l4)}
+.infra .tier p{color:var(--muted);font-size:.95rem}
+.infra .tier ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.93rem}
+.infra .tier li{padding-top:7px;border-top:1px solid var(--line)}
+@media (max-width:900px){.infra .tiers{grid-template-columns:1fr}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.stats div{display:grid;gap:6px;align-content:start}
+.stats b{font:700 clamp(2.2rem,4vw,3.2rem) var(--display);letter-spacing:-0.04em;line-height:1}
+.stats p{font-size:.97rem;max-width:30ch}
+.stats small{color:var(--muted);font-size:.78rem}
+@media (max-width:700px){.stats{grid-template-columns:1fr}}
+
+/* compare */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font:600 .95rem var(--display);border-bottom:2px solid var(--ink)}
+tbody th{font-weight:600;width:24%}
+td.v{background:var(--surface);font-weight:500}
+.offers{display:grid;gap:8px}
+.offer{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:.93rem;font-variant-numeric:tabular-nums}
+.offer.no{background:none;color:var(--muted);border-style:dashed}
+.offer.best{border:2px solid var(--brand)}
+.tag{font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--brand);color:var(--brand-ink)}
+.app{background:var(--ink);color:var(--bg);border-radius:12px;padding:13px 16px;font-weight:600;font-size:.95rem}
+.fan{height:22px;margin-left:44px;border-left:2px solid var(--line)}
+
+/* launch options */
+.launch{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.launch article{padding:28px;display:grid;gap:14px;align-content:start;border-right:1px solid var(--line)}
+.launch article:last-child{border-right:0}
+.launch dl{margin:0;display:grid;gap:10px;font-size:.93rem}
+.launch dt{color:var(--muted);font-size:.8rem}
+.launch dd{margin:0}
+.effort{display:flex;gap:4px;align-items:center}
+.effort i{width:26px;height:8px;border-radius:2px;background:var(--line)}
+.effort i.f{background:var(--brand)}
+.effort span{margin-left:8px;font-weight:600;font-size:.9rem}
+.mock{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:12px;font-size:.78rem;display:grid;gap:6px;min-height:96px;align-content:start}
+.mock .u{height:8px;border-radius:2px;background:var(--line)}
+.mock .p{height:22px;border-radius:5px;background:var(--brand);width:46%}
+.mock code{font:500 .76rem ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow-x:auto;display:block;color:var(--ink)}
+@media (max-width:900px){.launch{grid-template-columns:1fr}.launch article{border-right:0;border-bottom:1px solid var(--line)}.launch article:last-child{border-bottom:0}}
+
+/* steps */
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;gap:8px;align-content:start;padding-top:16px;border-top:2px solid var(--ink)}
+ol.steps li::before{content:counter(s);font:700 1.6rem var(--display);color:var(--brand)}
+ol.steps p{color:var(--muted);font-size:.95rem}
+@media (max-width:900px){ol.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){ol.steps{grid-template-columns:1fr}}
+
+details{border-bottom:1px solid var(--line);padding:16px 0}
+details summary{font:600 1.08rem var(--display);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+details summary::after{content:"+";font-weight:400;color:var(--muted)}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--muted);margin-top:10px;max-width:68ch}
+
+.prod{display:grid;grid-template-columns:8px 1fr;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;align-items:stretch}
+.prod>i{border-radius:4px}
+.prod>div{display:grid;gap:8px}
+.prod p{color:var(--muted);font-size:.96rem}
+.prod .use{font-size:.86rem;color:var(--ink)}
+pre.code{background:var(--ink);color:var(--bg);border-radius:14px;padding:20px;overflow-x:auto;font:500 .84rem/1.6 ui-monospace,Menlo,Consolas,monospace;margin:0}
+.people{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.people div{padding-top:14px;border-top:2px solid var(--ink)}
+.people b{display:block;font:600 1.05rem var(--display)}
+.people span{color:var(--muted);font-size:.9rem}
+@media (max-width:900px){.people{grid-template-columns:repeat(2,1fr)}}
+
+/* contact + footer */
+#contact{background:var(--ink);color:var(--bg);padding:80px 0}
+#contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+#contact h2{max-width:14ch}
+#contact p.l{opacity:.8;margin-top:16px;max-width:44ch}
+form{display:grid;gap:14px}
+form label{display:grid;gap:5px;font-size:.86rem;font-weight:500}
+form input,form select{font:400 1rem var(--body);padding:12px 14px;border-radius:10px;border:1px solid transparent;background:var(--bg);color:var(--ink)}
+form .btn{background:var(--bg);color:var(--ink);border-color:var(--bg);justify-self:start}
+#formnote{font-size:.9rem;min-height:1.4em}
+@media (max-width:820px){#contact .wrap{grid-template-columns:1fr}}
+footer{padding:48px 0 56px;font-size:.9rem}
+footer .cols{display:grid;grid-template-columns:1.4fr repeat(5,1fr);gap:24px}
+footer h4{font-size:.92rem;margin-bottom:10px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+footer a{text-decoration:none;color:var(--muted)}
+footer a:hover{color:var(--ink)}
+footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;max-width:90ch}
+@media (max-width:900px){footer .cols{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="#home" aria-label="Vyant home"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Vyant</a>
+    <button id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="main" id="nav" aria-label="Main">
+      <div class="item"><button data-go="platforms" aria-haspopup="true">Platforms</button>
+        <div class="menu">
+          <a href="#platforms" data-sec="p-infra"><strong>Capital Infrastructure</strong><span>Technology, products and a turn-key program</span></a>
+          <a href="#platforms" data-sec="p-why"><strong>Why a lender panel</strong><span>More approvals, more funding, no credit risk</span></a>
+          <a href="#platforms" data-sec="p-types"><strong>Who we work with</strong><span>Vertical SaaS, payments, marketplaces, accounting</span></a>
+          <a href="#platforms" data-sec="p-launch"><strong>Three ways to launch</strong><span>Hosted, SDK or API</span></a>
+          <a href="#platforms" data-sec="p-included"><strong>What's included</strong><span>Data, orchestration, monitoring, reporting</span></a>
+          <a href="#platforms" data-sec="p-econ"><strong>Economics</strong><span>Revenue share on every funded financing</span></a>
+        </div></div>
+      <div class="item"><button data-go="products" aria-haspopup="true">Products</button>
+        <div class="menu">
+          <a href="#products" data-sec="pr-stack"><strong>Capital stack</strong><span>The AI Capital Advisor sizes financing to cash flow</span></a>
+          <a href="#products" data-sec="pr-list"><strong>Line of credit</strong><span>Day-to-day working capital</span></a>
+          <a href="#products" data-sec="pr-list"><strong>Term loan</strong><span>Growth and equipment</span></a>
+          <a href="#products" data-sec="pr-list"><strong>Revenue-based loans</strong><span>Repayment that follows sales</span></a>
+          <a href="#products" data-sec="pr-list"><strong>Inventory financing</strong><span>Stock and purchasing</span></a>
+          <a href="#products" data-sec="pr-list"><strong>Invoice financing</strong><span>Advance on unpaid invoices</span></a>
+          <a href="#products" data-sec="pr-abl"><strong>Asset-based lending</strong><span>Facilities from about $50K, without field exams</span></a>
+        </div></div>
+      <div class="item"><button data-go="capital" aria-haspopup="true">Capital</button>
+        <div class="menu">
+          <a href="#capital" data-sec="c-net"><strong>Lender network</strong><span>Platform distribution through one connection</span></a>
+          <a href="#capital" data-sec="c-lenders"><strong>Why lenders join</strong><span>Matched applications, standardized data, your decision</span></a>
+          <a href="#capital" data-sec="c-suite"><strong>Underwriting Suite</strong><span>For banks that want to lend without an API build</span></a>
+          <a href="#capital" data-sec="c-join"><strong>How to join</strong><span>From first conversation to matched applications</span></a>
+        </div></div>
+      <div class="item"><button data-go="resources" aria-haspopup="true">Resources</button>
+        <div class="menu">
+          <a href="#resources" data-sec="r-dev"><strong>Developer portal</strong><span>API reference, SDK, sandbox, webhooks</span></a>
+          <a href="#resources" data-sec="r-guides"><strong>Guides</strong><span>Launching and growing an embedded capital program</span></a>
+          <a href="#resources" data-sec="r-guides"><strong>Insights</strong><span>Research and writing on SMB credit</span></a>
+          <a href="#resources" data-sec="r-trust"><strong>Security and compliance</strong><span>How data and decisions are handled</span></a>
+          <a href="#resources" data-sec="r-faq"><strong>FAQ</strong><span>Common questions from platforms</span></a>
+        </div></div>
+      <div class="item"><button data-go="about" aria-haspopup="true">About</button>
+        <div class="menu">
+          <a href="#about" data-sec="a-co"><strong>Company</strong><span>Why we are building Vyant</span></a>
+          <a href="#about" data-sec="a-team"><strong>Team</strong><span>Operators from Banxware, Wayflyer and J.P. Morgan</span></a>
+          <a href="#about" data-sec="a-careers"><strong>Careers</strong><span>Open roles</span></a>
+          <a href="#about" data-sec="contact"><strong>Contact</strong><span>Book a 20-minute demo</span></a>
+        </div></div>
+    </nav>
+    <a class="btn" href="#" data-sec="contact">Book a 20-minute demo</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HOME ================= -->
+<section data-view="home">
+  <div class="hero">
+    <div class="wrap">
+      <div class="copy">
+        <p class="kicker">Capital Infrastructure for platforms</p>
+        <h1>Embed once. Every lender competes for your customers.</h1>
+        <p class="lede">Don't let limited financing options stall your customers' growth. Vyant's multi-lender platform gives them access to more lenders and funding options through one application, embedded inside your product. You earn a revenue share and carry no credit risk.</p>
+        <div class="row">
+          <a class="btn" href="#" data-sec="contact">Book a 20-minute demo</a>
+          <a class="btn ghost" href="#home" data-sec="h-launch">See how you launch</a>
+        </div>
+      </div>
+
+      <div class="builder" aria-label="Capital stack example">
+        <div>
+          <h4>One application, one capital stack</h4>
+          <p class="small muted">Pick a business and choose what it needs. Each layer is funded by a different lender.</p>
+        </div>
+        <div class="seg" id="biz" role="group" aria-label="Example business"></div>
+        <div class="bwrap">
+          <div class="stack" id="stack" aria-live="polite"></div>
+          <div class="picks" id="picks"></div>
+        </div>
+        <div class="total">
+          <span class="small muted" id="totalnote"></span>
+          <b id="total"></b>
+        </div>
+        <p class="small muted">Illustrative example. Pre-qualified offers, with funding in as little as 2 days once approved. Credit decisions remain with each lender.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="band tint">
+    <div class="wrap">
+      <div class="head">
+        <h2>One lender per platform can't serve every business</h2>
+        <p class="lede">A single credit box and a single product leave many of your customers with no offer, or one that is too small.</p>
+      </div>
+      <div class="stats">
+        <div><b>~1 in 2</b><p>small businesses report unmet financing needs.</p><small>Federal Reserve Banks, Small Business Credit Survey</small></div>
+        <div><b>93%</b><p>of lenders say declining a creditworthy small business is a missed opportunity.</p><small>LexisNexis Risk Solutions, 2026 US SMB Credit Risk Report</small></div>
+        <div><b>~6x</b><p>Embedded lending is growing about six times faster than the small business loan market.</p><small>Allied Market Research</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band" id="h-infra">
+    <div class="wrap">
+      <div class="head">
+        <h2>Capital Infrastructure for platforms</h2>
+        <p class="lede">Everything a platform needs to offer capital, in one layer between your product and the lenders: the technology, the financing products and a turn-key program to run them.</p>
+      </div>
+      <div class="infra">
+        <div class="end"><b>Your platform</b><span>Your customers, your brand, your data</span></div>
+        <div class="core">
+          <h3>Vyant Capital Infrastructure</h3>
+          <div class="tiers">
+            <div class="tier"><h3>Technology</h3><p>The systems that turn platform data into funded offers.</p>
+              <ul><li>Data aggregation across sales, banking, credit and accounting</li><li>AI Capital Advisor</li><li>Multi-lender orchestration</li><li>Hosted site, SDK and API</li><li>Live Collateral Record</li></ul></div>
+            <div class="tier"><h3>Products</h3><p>Financing across the cash cycle, combined into one stack.</p>
+              <ul><li>Lines of credit</li><li>Term loans</li><li>Revenue-based loans</li><li>Inventory financing</li><li>Invoice financing</li></ul></div>
+            <div class="tier"><h3>Turn-key program</h3><p>The operating side of a capital business, already in place.</p>
+              <ul><li>A lender panel, contracted and connected</li><li>Compliance handled by the lenders</li><li>Revenue share on funded financing</li><li>Program monitoring and reporting</li><li>Launch support, live in as little as 2 weeks</li></ul></div>
+          </div>
+        </div>
+        <div class="end"><b>Lenders and capital</b><span>Banks, fintech lenders and private credit</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band line" id="h-multi">
+    <div class="wrap split">
+      <div>
+        <div class="head">
+          <h2>A panel of lenders behind one application</h2>
+          <p class="lede">When one lender's credit box says no, the application keeps moving. More of your customers get approved, the offers are larger, and the capital behind your program is not capped by one balance sheet.</p>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th></th><th>One embedded lender</th><th>Vyant lender panel</th></tr></thead>
+            <tbody>
+              <tr><th>Approvals</th><td>One credit box decides</td><td class="v">Each application is checked against every matching program</td></tr>
+              <tr><th>Offer size</th><td>Limited by one lender's appetite</td><td class="v">Lenders compete, and offers can be combined</td></tr>
+              <tr><th>Products</th><td>Usually one</td><td class="v">Five, from lines of credit to invoice financing</td></tr>
+              <tr><th>Capital supply</th><td>One balance sheet</td><td class="v">Banks, fintech lenders and private credit</td></tr>
+              <tr><th>Your integration</th><td>One per lender</td><td class="v">One, for the whole panel</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="offers" aria-label="Example of offers returned for one application">
+          <div class="app">One application from your customer</div>
+          <div class="fan" aria-hidden="true"></div>
+          <div class="offer no"><span>Lender A</span><span>No credit box match</span><span></span></div>
+          <div class="offer"><span>Lender B</span><span>Revenue-based, 10% fee, 8 months, weekly</span><span></span></div>
+          <div class="offer"><span>Lender C</span><span>Term loan, 15% p.a., 24 months</span><span></span></div>
+          <div class="offer best"><span>Lender D</span><span>Line of credit, Prime + 2%, 18 months</span><span class="tag">Best fit</span></div>
+        </div>
+        <p class="small muted" style="margin-top:14px">Illustrative offers. With a single lender, a decline from Lender A would end here.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="band line" id="h-stack">
+    <div class="wrap">
+      <div class="head">
+        <h2>Your customers design the capital stack that fits them</h2>
+        <p class="lede">Most businesses need more than one kind of financing. The AI Capital Advisor reads sales, banking and accounting data, proposes a stack sized to the business's cash cycle, and the customer adjusts it before lenders fill it with offers.</p>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+        <div class="plain" style="border-color:var(--l2)"><h4>Revenue-based loans</h4><p>Repaid from revenue.</p></div>
+        <div class="plain" style="border-color:var(--l3)"><h4>Term loans</h4><p>Fixed repayments.</p></div>
+        <div class="plain" style="border-color:var(--l1)"><h4>Lines of credit</h4><p>Draw as needed.</p></div>
+        <div class="plain" style="border-color:var(--l2)"><h4>Inventory financing</h4><p>Backed by inventory.</p></div>
+        <div class="plain" style="border-color:var(--l4)"><h4>Invoice financing</h4><p>Advance on invoices.</p></div>
+      </div>
+      <p class="small muted" style="margin-top:18px">Multiple lenders compete on every product. Availability depends on your lender panel.</p>
+      <div class="row" style="margin-top:32px"><a class="btn ghost" href="#products">See all products</a></div>
+    </div>
+  </div>
+
+  <div class="band tint" id="h-launch">
+    <div class="wrap">
+      <div class="head">
+        <h2>One integration. Live in as little as 2 weeks.</h2>
+        <p class="lede">Connect once to reach multiple lenders and financing products. Choose the setup that fits your team. You can move from one to the next later.</p>
+      </div>
+      <div class="launch">
+        <article>
+          <div class="mock" aria-hidden="true"><div class="u" style="width:40%"></div><div class="u" style="width:80%"></div><div class="u" style="width:65%"></div><div class="p"></div></div>
+          <h3>Hosted</h3>
+          <p class="muted">A branded financing site, hosted by Vyant. Send customers there from a link, banner or email.</p>
+          <div class="effort" aria-label="Engineering effort: none"><i></i><i></i><i></i><span>No code</span></div>
+          <dl><div><dt>You build</dt><dd>A link in your product</dd></div><div><dt>Best for</dt><dd>Proving demand before committing a team</dd></div></dl>
+        </article>
+        <article>
+          <div class="mock" aria-hidden="true"><div class="u" style="width:30%"></div><div style="border:1.5px dashed var(--brand);border-radius:6px;padding:8px;display:grid;gap:5px"><div class="u" style="width:70%"></div><div class="p"></div></div></div>
+          <h3>SDK</h3>
+          <p class="muted">Embed prebuilt financing components in your product, styled to your brand.</p>
+          <div class="effort" aria-label="Engineering effort: light"><i class="f"></i><i></i><i></i><span>Low code</span></div>
+          <dl><div><dt>You build</dt><dd>Component placement and theming</dd></div><div><dt>Best for</dt><dd>A native experience without building lending screens</dd></div></dl>
+        </article>
+        <article>
+          <div class="mock" aria-hidden="true"><code>POST /v1/applications
+GET  /v1/offers
+POST /v1/offers/{id}/accept</code></div>
+          <h3>API</h3>
+          <p class="muted">Design the full experience to match your product, on one API for applications, data and offers.</p>
+          <div class="effort" aria-label="Engineering effort: full build"><i class="f"></i><i class="f"></i><i class="f"></i><span>Fully custom</span></div>
+          <dl><div><dt>You build</dt><dd>The complete customer journey</dd></div><div><dt>Best for</dt><dd>Platforms that want total control of the experience</dd></div></dl>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="wrap">
+      <div class="head"><h2>How a financing moves through Vyant</h2></div>
+      <ol class="steps">
+        <li><h4>Data comes in</h4><p>Platform transactions, banking, credit and accounting data replace paperwork.</p></li>
+        <li><h4>The Advisor builds the stack</h4><p>Products and amounts are sized to the business's cash flows.</p></li>
+        <li><h4>Lenders are matched</h4><p>Each need goes to the lender programs whose credit box fits it.</p></li>
+        <li><h4>Funded and recorded</h4><p>The customer compares offers and accepts in your product, with funding in as little as 2 days.</p></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band tint">
+    <div class="wrap">
+      <div class="head"><h2>Capital to power growth for you and your customers</h2></div>
+      <div class="grid g2">
+        <div class="card"><h3>For your platform</h3><ul class="ticks">
+          <li>Earn a revenue share, with no credit risk</li>
+          <li>Lenders handle compliance</li>
+          <li>Improve customer retention</li>
+          <li>Offer more financing options than competing platforms</li></ul></div>
+        <div class="card"><h3>For your customers</h3><ul class="ticks">
+          <li>Financing inside the platform they already use</li>
+          <li>One application, multiple offers</li>
+          <li>Offers matched to their business data, at competitive terms</li>
+          <li>Approved and funded in as little as 2 days</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLATFORMS ================= -->
+<section data-view="platforms">
+  <div class="wrap pagehead">
+    <h1>Capital Infrastructure for platforms</h1>
+    <p class="lede">Vyant is the capital layer a platform embeds once. It brings the technology, the financing products and a turn-key program, with a panel of lenders behind them. You get a financing business with no loans on your books.</p>
+  </div>
+  <div class="band line" id="p-infra"><div class="wrap">
+    <div class="head"><h2>Three layers, one integration</h2></div>
+    <div class="grid g3">
+      <div class="plain"><h3>Technology</h3><p>Data aggregation, the AI Capital Advisor, multi-lender orchestration and the Live Collateral Record, reached through a hosted site, an SDK or an API.</p></div>
+      <div class="plain"><h3>Products</h3><p>Lines of credit, term loans, revenue-based loans, inventory financing and invoice financing, with several lenders competing on each.</p></div>
+      <div class="plain"><h3>Turn-key program</h3><p>A contracted lender panel, compliance handled by the lenders, revenue share, monitoring, reporting and launch support.</p></div>
+    </div>
+  </div></div>
+  <div class="band tint" id="p-why"><div class="wrap">
+    <div class="head"><h2>Why platforms choose a panel</h2></div>
+    <div class="grid g3">
+      <div class="card"><h3>Higher approvals</h3><p>An application declined by one lender's credit box is still eligible for the others. Fewer of your customers leave with nothing.</p></div>
+      <div class="card"><h3>More funding per customer</h3><p>Lenders compete on amount and terms, and several products can be combined into one stack.</p></div>
+      <div class="card"><h3>Larger capital pools</h3><p>Banks, fintech lenders and private credit fund the panel, so supply grows with your program.</p></div>
+      <div class="card"><h3>Products that fit your vertical</h3><p>Sellers need inventory finance. Service businesses need a line. You are not limited to one lender's product.</p></div>
+      <div class="card"><h3>No credit risk</h3><p>Vyant holds no loans and neither do you. Credit decisions and balance sheets stay with the lenders.</p></div>
+      <div class="card"><h3>One integration</h3><p>Add lenders and products over time without new builds, contracts or compliance reviews for each.</p></div>
+    </div>
+  </div></div>
+  <div class="band" id="p-types"><div class="wrap">
+    <div class="head"><h2>Who we work with</h2><p class="lede">Platforms that own the small business relationship and see its data every day.</p></div>
+    <div class="grid g4">
+      <div class="plain"><h4>Vertical SaaS</h4><p>Software that runs restaurants, trades, clinics, salons and shops.</p></div>
+      <div class="plain"><h4>Payments</h4><p>Processors and payment facilitators with daily settlement data.</p></div>
+      <div class="plain"><h4>Marketplaces</h4><p>Commerce platforms whose sellers carry inventory and receivables.</p></div>
+      <div class="plain"><h4>Accounting and banking tools</h4><p>Products that already hold the books and the cash position.</p></div>
+    </div>
+  </div></div>
+  <div class="band tint" id="p-launch"><div class="wrap">
+    <div class="head"><h2>Three ways to launch</h2><p class="lede">Live in as little as 2 weeks. All three setups reach the same lender panel.</p></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th>Hosted</th><th>SDK</th><th>API</th></tr></thead>
+      <tbody>
+        <tr><th>Customer experience</th><td>Branded financing site hosted by Vyant</td><td>Prebuilt components inside your product, in your brand</td><td>Your own screens, end to end</td></tr>
+        <tr><th>You build</th><td>A link, banner or email</td><td>Component placement and theming</td><td>Application, offers, acceptance and account views</td></tr>
+        <tr><th>Engineering effort</th><td>No code</td><td>Low code</td><td>Fully custom</td></tr>
+        <tr><th>Data sharing</th><td>Customer connects accounts in the flow</td><td>Platform data passed for pre-qualified offers</td><td>Platform data passed for pre-qualified offers</td></tr>
+        <tr><th>Best for</th><td>Testing demand quickly</td><td>A native feel with little build</td><td>Full control of the journey</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+  <div class="band" id="p-included"><div class="wrap split">
+    <div class="head" style="margin:0"><h2>What's included</h2><p class="lede">One integration covers the work that normally takes a lending team.</p></div>
+    <ul class="ticks">
+      <li><strong>Data aggregation</strong> across transactions, banking, credit and accounting</li>
+      <li><strong>AI Capital Advisor</strong> that recommends a stack for each customer</li>
+      <li><strong>Lender orchestration</strong> across every program on the panel</li>
+      <li><strong>Compliance</strong> handled by the lenders, with program monitoring built in</li>
+      <li><strong>Lender onboarding</strong>. New lenders and products appear without a new build</li>
+      <li><strong>Program reporting</strong> on applications, offers and funded volume</li>
+    </ul>
+  </div></div>
+  <div class="band tint" id="p-econ"><div class="wrap split">
+    <div class="head" style="margin:0"><h2>Economics</h2><p class="lede">You share in the revenue on every financing funded through your platform, including renewals. Lenders pay Vyant when they fund. You put up no capital.</p></div>
+    <div class="row" style="align-self:center"><a class="btn" href="#" data-sec="contact">Ask for a program proposal</a></div>
+  </div></div>
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+<section data-view="products">
+  <div class="wrap pagehead">
+    <h1>Financing built as a stack, not a single loan</h1>
+    <p class="lede">Each business gets a set of products sized to its cash flows and re-optimized as its data changes. Lenders on the panel compete to fill each layer.</p>
+  </div>
+  <div class="band tint" id="pr-stack"><div class="wrap">
+    <div class="head"><h2>The AI Capital Advisor</h2><p class="lede">It recommends. The business owner decides. Lenders make the credit decisions.</p></div>
+    <div class="grid g3">
+      <div class="card"><h3>What it reads</h3><ul class="ticks"><li>Sales, inventory and payout data from your platform</li><li>Bank and accounting data</li><li>Forward cash-flow projections</li><li>Existing debt and credit profile</li></ul></div>
+      <div class="card"><h3>What it builds</h3><ul class="ticks"><li>A line for working capital</li><li>Inventory financing for stock</li><li>Invoice financing for receivables</li><li>A term loan for growth</li><li>An asset-based facility for larger capacity</li></ul></div>
+      <div class="card"><h3>What it optimizes</h3><ul class="ticks"><li>Cost of capital across the stack</li><li>Tenor and repayment matched to the cash cycle</li><li>Approval odds and timing</li><li>The stack again, as the business changes</li></ul></div>
+    </div>
+  </div></div>
+  <div class="band" id="pr-list"><div class="wrap">
+    <div class="head"><h2>Products on the panel</h2><p class="lede">Multiple lenders compete on every product. Availability depends on your lender panel.</p></div>
+    <div class="grid g2">
+      <div class="prod"><i style="background:var(--l1)"></i><div><h3>Line of credit</h3><p>Revolving access to funds. Draw when needed and pay for what is used.</p><p class="use">Used for payroll timing, slow weeks and day-to-day working capital.</p></div></div>
+      <div class="prod"><i style="background:var(--l3)"></i><div><h3>Term loan</h3><p>A fixed amount repaid on a fixed schedule.</p><p class="use">Used for equipment, new locations and planned growth.</p></div></div>
+      <div class="prod"><i style="background:var(--l2)"></i><div><h3>Revenue-based loans</h3><p>An advance repaid as a share of sales, so repayment slows when revenue does.</p><p class="use">Used by businesses with card or platform revenue and uneven months.</p></div></div>
+      <div class="prod"><i style="background:var(--l2)"></i><div><h3>Inventory financing</h3><p>Funds stock and supplier orders ahead of the sales they produce.</p><p class="use">Used by sellers and distributors before peak season.</p></div></div>
+      <div class="prod"><i style="background:var(--l4)"></i><div><h3>Invoice financing</h3><p>An advance on unpaid invoices, repaid when the customer pays.</p><p class="use">Used by businesses that sell on 30 to 90 day terms.</p></div></div>
+    </div>
+  </div></div>
+  <div class="band tint" id="pr-abl"><div class="wrap">
+    <div class="head"><h2>Asset-based lending without field exams</h2><p class="lede">Traditional asset-based lending carries fixed costs that only multi-million facilities can absorb. Vyant replaces them with platform data, which makes facilities from about $50K viable.</p></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Traditional fixed cost</th><th>Vyant replaces it with</th></tr></thead>
+      <tbody>
+        <tr><th style="width:36%">Field exams</th><td class="v">Collateral verified at the source from platform sales, inventory and payout data</td></tr>
+        <tr><th>Borrowing-base certificates</th><td class="v">A live borrowing base, recalculated continuously from connected data</td></tr>
+        <tr><th>Lien searches and intercreditors</th><td class="v">A registry check across lenders, plus legal control of collateral where available</td></tr>
+        <tr><th>Lockboxes and cash monitoring</th><td class="v">Platform payouts routed to the lender or a controlled account</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted" style="margin-top:16px">Describes the process as designed. Credit decisions remain with each lender.</p>
+  </div></div>
+</section>
+
+<!-- ================= CAPITAL ================= -->
+<section data-view="capital">
+  <div class="wrap pagehead" id="c-net">
+    <h1>Join the Vyant lender network</h1>
+    <p class="lede">Connect your lending programs once and reach small businesses inside the platforms they already run on. Every application arrives with source-connected data and has been matched to your credit box before you see it.</p>
+    <div style="margin-top:26px"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a><span class="muted small">or write to <a href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">capital@vyant.ai</a></span></div></div>
+  </div>
+
+  <div class="band tint"><div class="wrap split">
+    <div class="head" style="margin:0">
+      <h2>What the network is</h2>
+      <p class="lede">A marketplace that connects lenders directly with platform demand. Platforms embed Vyant once. Their customers apply once. Your programs compete for the applications that fit them.</p>
+    </div>
+    <div class="offers">
+      <div class="app">Platforms: software, payments, marketplaces</div>
+      <div class="fan" aria-hidden="true"></div>
+      <div class="offer best" style="grid-template-columns:1fr"><span><strong>Vyant</strong> gathers the data, sizes the need and matches it to credit boxes</span></div>
+      <div class="fan" aria-hidden="true"></div>
+      <div class="offer" style="grid-template-columns:1fr"><span>Your line of credit program</span></div>
+      <div class="offer" style="grid-template-columns:1fr"><span>Your term loan program</span></div>
+      <div class="offer no" style="grid-template-columns:1fr"><span>Applications outside your box never reach you</span></div>
+    </div>
+  </div></div>
+
+  <div class="band" id="c-lenders"><div class="wrap">
+    <div class="head"><h2>Why lenders join</h2></div>
+    <div class="grid g3">
+      <div class="card"><h3>Distribution at scale</h3><p>One connection reaches every platform on Vyant, in place of broker networks priced per lead.</p></div>
+      <div class="card"><h3>Applications that fit</h3><p>You see only applications that match your program, so underwriting time goes to deals you can fund.</p></div>
+      <div class="card"><h3>Lower cost to acquire and serve</h3><p>Digital intake, connected data and platform-routed repayment take cost out of each loan.</p></div>
+      <div class="card"><h3>You keep the credit decision</h3><p>You set the credit box, price the risk and approve or decline. Vyant matches and ranks; it never decides.</p></div>
+      <div class="card"><h3>Standardized data on every file</h3><p>Platform sales, banking, accounting and bureau data arrive in one consistent format, in place of documents collected from the borrower.</p></div>
+      <div class="card"><h3>A partner, not a competitor</h3><p>Vyant holds no loans and takes no credit risk, so we never compete with you for the asset.</p></div>
+    </div>
+    <div class="stats" style="grid-template-columns:1fr;margin-top:48px"><div><b>93%</b><p>of lenders say declining a creditworthy small business is a missed opportunity. A panel gives those applications somewhere to go, and gives you the ones other lenders could not serve.</p><small>LexisNexis Risk Solutions, 2026 US SMB Credit Risk Report</small></div></div>
+  </div></div>
+
+  <div class="band tint" id="c-who"><div class="wrap">
+    <div class="head"><h2>Who the network is for</h2></div>
+    <div class="grid g3">
+      <div class="plain"><h3>Banks and credit unions</h3><p>Grow small business lending beyond the branch footprint, with cash-flow underwriting tools included.</p></div>
+      <div class="plain"><h3>Fintech lenders</h3><p>Add embedded distribution across many platforms through a single API connection.</p></div>
+      <div class="plain"><h3>Specialty finance</h3><p>Bring inventory, invoice and asset-based programs to businesses whose platform data proves the collateral.</p></div>
+    </div>
+  </div></div>
+
+  <div class="band" id="c-suite"><div class="wrap">
+    <div class="head"><h2>Two ways to connect</h2><p class="lede">Choose by how your team works today. Both receive the same applications.</p></div>
+    <div class="grid g2">
+      <div class="card"><h3>API integration</h3><p>For lenders with their own decisioning. Receive matched applications and data by API, return offers, and get notified when the customer accepts.</p>
+        <ul class="ticks"><li>Publish your credit box and products</li><li>Decide in your own systems</li><li>Change appetite as your book changes</li></ul></div>
+      <div class="card"><h3>Underwriting Suite</h3><p>For banks that want to lend through platforms without an API build. Your credit team works in the Suite, which is already connected to the network.</p>
+        <ul class="ticks"><li>Cash-flow underwriting on bank, platform and bureau data</li><li>Reason codes and adverse-action letters on every decision</li><li>Your credit box checked line by line</li></ul></div>
+    </div>
+    <h3 style="margin:48px 0 20px">Inside the Underwriting Suite</h3>
+    <ol class="steps" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+      <li><h4>Data acquisition</h4><p>Bank, platform, bureau and registry data in one schema.</p></li>
+      <li><h4>Scoring</h4><p>Bank, cash-flow and transaction models blended into one rating.</p></li>
+      <li><h4>Explainability</h4><p>Score drivers become reason codes and adverse-action letters.</p></li>
+      <li><h4>Credit box decision</h4><p>Checked line by line, then countersigned or closed straight through.</p></li>
+      <li><h4>Monitoring</h4><p>Model performance and overrides watched daily.</p></li>
+    </ol>
+  </div></div>
+
+  <div class="band tint" id="c-join"><div class="wrap">
+    <div class="head"><h2>How joining works</h2></div>
+    <ol class="steps">
+      <li><h4>Introduce your program</h4><p>Tell us what you lend, to whom, and where. We confirm the fit with platforms on the network.</p></li>
+      <li><h4>Define your credit box</h4><p>Set products, ticket sizes, industries, pricing ranges and eligibility rules.</p></li>
+      <li><h4>Connect</h4><p>Integrate by API, or onboard your credit team to the Underwriting Suite.</p></li>
+      <li><h4>Receive matched applications</h4><p>Start with the platforms and volumes you choose, then widen as results come in.</p></li>
+    </ol>
+  </div></div>
+
+  <div class="band" id="c-faq"><div class="wrap" style="max-width:820px">
+    <div class="head"><h2>Questions lenders ask</h2></div>
+    <details open><summary>Who makes the credit decision?</summary><p>You do, against your own credit box and policies. Vyant matches applications to programs and ranks offers for the customer.</p></details>
+    <details><summary>Does Vyant lend or hold loans?</summary><p>No. Vyant takes no credit risk and holds no loans. Financing is provided by the lenders on the network.</p></details>
+    <details><summary>Which products can we offer?</summary><p>Lines of credit, term loans, revenue-based loans, inventory financing, invoice financing and asset-based facilities. You can join with one program and add more.</p></details>
+    <details><summary>Do we need an engineering team?</summary><p>No. Banks without API capacity join through the Underwriting Suite.</p></details>
+    <details><summary>What do we receive with each application?</summary><p>Platform sales and payout data, bank and accounting data, bureau and registry checks, and the financing need the customer selected.</p></details>
+    <details><summary>How is Vyant paid?</summary><p>Lenders pay fees tied to processed applications and funded financing. We share the schedule when we discuss your program.</p></details>
+  </div></div>
+
+  <div class="band tint"><div class="wrap split">
+    <div class="head" style="margin:0"><h2>Bring your programs to the network</h2><p class="lede">Tell us what you lend and we will show you where it fits.</p></div>
+    <div style="align-self:center"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a><span class="muted small">or write to <a href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">capital@vyant.ai</a></span></div></div>
+  </div></div>
+</section>
+
+<!-- ================= RESOURCES ================= -->
+<section data-view="resources">
+  <div class="wrap pagehead">
+    <h1>Build, launch and run your capital program</h1>
+    <p class="lede">Documentation for engineers and guidance for the people who own the program.</p>
+  </div>
+  <div class="band tint" id="r-dev"><div class="wrap split">
+    <div>
+      <div class="head"><h2>Developer portal</h2><p class="lede">One API for applications, data and offers.</p></div>
+      <div class="grid g2">
+        <div class="plain"><h4>Quickstart</h4><p>First application in the sandbox.</p></div>
+        <div class="plain"><h4>API reference</h4><p>Applications, data, offers, accounts.</p></div>
+        <div class="plain"><h4>SDK</h4><p>Prebuilt components and theming.</p></div>
+        <div class="plain"><h4>Webhooks</h4><p>Offer, funding and repayment events.</p></div>
+        <div class="plain"><h4>Sandbox</h4><p>Test businesses and simulated lenders.</p></div>
+        <div class="plain"><h4>Changelog and status</h4><p>Releases and uptime.</p></div>
+      </div>
+      <div class="row" style="margin-top:28px;align-items:center"><a class="btn" href="#" data-sec="contact">Get Access</a><span class="muted small">Sandbox keys and documentation for approved platforms and lenders</span></div>
+    </div>
+    <div>
+<pre class="code" aria-label="Illustrative API request">curl https://api.vyant.example/v1/applications \
+  -H "Authorization: Bearer sk_test_..." \
+  -d business_id="biz_8f2a" \
+  -d needs[]="working_capital" \
+  -d needs[]="inventory"
+
+{
+  "id": "app_31c9",
+  "status": "matching",
+  "stack": ["line_of_credit", "inventory_po"],
+  "offers_url": "/v1/applications/app_31c9/offers"
+}</pre>
+      <p class="small muted" style="margin-top:12px">Illustrative request. The published reference will define the final shapes.</p>
+    </div>
+  </div></div>
+  <div class="band" id="r-guides"><div class="wrap">
+    <div class="head"><h2>Guides and insights</h2></div>
+    <div class="grid g3">
+      <div class="card"><h3>Launching embedded capital</h3><p>Choosing an integration path, placing offers in your product, and what to measure in the first 90 days.</p></div>
+      <div class="card"><h3>One lender or many</h3><p>How approval rates, offer sizes and product range change when a panel stands behind your program.</p></div>
+      <div class="card"><h3>The small business capital stack</h3><p>Which financing fits which need, written for product teams rather than credit officers.</p></div>
+    </div>
+  </div></div>
+  <div class="band tint" id="r-trust"><div class="wrap split">
+    <div class="head" style="margin:0"><h2>Security and compliance</h2><p class="lede">How customer data is accessed, who makes credit decisions, and what your platform is and is not responsible for.</p></div>
+    <ul class="ticks"><li>Customer-permissioned access to bank and accounting data</li><li>Credit decisions made and documented by each lender</li><li>Reason codes carried on every decision in the Underwriting Suite</li><li>Lending compliance handled by the lenders</li></ul>
+  </div></div>
+  <div class="band" id="r-faq"><div class="wrap" style="max-width:820px">
+    <div class="head"><h2>Questions platforms ask</h2></div>
+    <details open><summary>Do we take any credit risk?</summary><p>No. Loans are made and held by the lenders on the panel. Neither your platform nor Vyant puts loans on its balance sheet.</p></details>
+    <details><summary>We already have an embedded lender. Can we still use Vyant?</summary><p>Talk to us. A common starting point is routing the applications your current lender declines or under-serves to the panel.</p></details>
+    <details><summary>Who makes the credit decision?</summary><p>Each lender, against its own credit box. Vyant matches and ranks; it does not approve or decline.</p></details>
+    <details><summary>What data do you need from us?</summary><p>For pre-qualified offers, the sales and payout data you already hold for each customer. With the hosted application, customers connect their own accounts and you share nothing up front.</p></details>
+    <details><summary>Can we switch integration approaches later?</summary><p>Yes. Hosted, SDK and API all sit on the same lender panel, so moving between them changes the experience, not the program.</p></details>
+    <details><summary>How do we get paid?</summary><p>A revenue share on each financing funded through your platform, including renewals.</p></details>
+  </div></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section data-view="about">
+  <div class="wrap pagehead" id="a-co">
+    <h1>We build Capital Infrastructure for platforms</h1>
+    <p class="lede">Small business financing is moving inside the software those businesses run on. We think the platforms hosting it should be able to offer every customer the best-fit lender, and that lenders should be able to reach those customers through one connection.</p>
+  </div>
+  <div class="band tint" id="a-team"><div class="wrap">
+    <div class="head"><h2>Team</h2><p class="lede">Operators from Banxware, Wayflyer and J.P. Morgan.</p></div>
+    <div class="people">
+      <div><b>Jens Röhrborn</b><span>Co-Founder</span></div>
+      <div><b>Sean O'Toole</b><span>Co-Founder</span></div>
+      <div><b>Matus Vacula</b><span>Engineering</span></div>
+      <div><b>Julio Izaguirre</b><span>Underwriting and Risk</span></div>
+      <div><b>Rajiv Yadlapalli</b><span>Capital Markets</span></div>
+    </div>
+  </div></div>
+  <div class="band" id="a-careers"><div class="wrap split">
+    <div class="head" style="margin:0"><h2>Careers</h2><p class="lede">We are a small team building credit infrastructure. If that is the work you want, write to us.</p></div>
+    <div class="row" style="align-self:center"><a class="btn" href="#" data-sec="contact">Get in touch</a></div>
+  </div></div>
+</section>
+
+</main>
+
+<section id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Add Capital Infrastructure to your platform</h2>
+      <p class="l">Tell us about your platform. We will come back with how a program could look for your customer base and which launch approach fits.</p>
+    </div>
+    <form id="lead" novalidate>
+      <label for="f-name">Name<input id="f-name" name="name" autocomplete="name" required></label>
+      <label for="f-email">Work email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+      <label for="f-co">Company<input id="f-co" name="company" autocomplete="organization" required></label>
+      <label for="f-type">I am a
+        <select id="f-type" name="type"><option>Platform</option><option>Lender</option><option>Capital provider</option><option>Something else</option></select></label>
+      <button class="btn" type="submit">Book a 20-minute demo</button>
+      <p id="formnote" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="mark" href="#home"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Vyant</a><p class="muted" style="margin-top:10px;max-width:26ch">Capital Infrastructure for platforms. One application, many lenders.</p></div>
+      <div><h4>Platforms</h4><ul><li><a href="#platforms" data-sec="p-infra">Capital Infrastructure</a></li><li><a href="#platforms" data-sec="p-launch">Ways to launch</a></li><li><a href="#platforms" data-sec="p-econ">Economics</a></li></ul></div>
+      <div><h4>Products</h4><ul><li><a href="#products" data-sec="pr-stack">Capital stack</a></li><li><a href="#products" data-sec="pr-list">All products</a></li><li><a href="#products" data-sec="pr-abl">Asset-based lending</a></li></ul></div>
+      <div><h4>Capital</h4><ul><li><a href="#capital" data-sec="c-lenders">For lenders</a></li><li><a href="#capital" data-sec="c-suite">Underwriting Suite</a></li><li><a href="#capital" data-sec="c-join">How to join</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="#resources" data-sec="r-dev">Developer portal</a></li><li><a href="#resources" data-sec="r-guides">Guides</a></li><li><a href="#resources" data-sec="r-faq">FAQ</a></li></ul></div>
+      <div><h4>About</h4><ul><li><a href="#about" data-sec="a-co">Company</a></li><li><a href="#about" data-sec="a-team">Team</a></li><li><a href="#about" data-sec="a-careers">Careers</a></li></ul></div>
+    </div>
+    <p class="legal">Vyant is not a lender. Financing is provided by partner lenders, each of which makes its own credit decisions. All offers are subject to approval, and terms vary. Examples and figures marked illustrative are not offers of credit. All applications are subject to lender review and approval.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var views=['home','platforms','products','capital','resources','about'];
+  var pending=null;
+  function show(){
+    var h=(location.hash||'').replace('#','');
+    if(views.indexOf(h)<0) h='home';
+    document.querySelectorAll('main>section[data-view]').forEach(function(s){s.classList.toggle('on',s.dataset.view===h)});
+    document.querySelectorAll('.item>button').forEach(function(b){
+      if(b.dataset.go===h) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
+    });
+    closeNav();
+    var t=pending&&document.getElementById(pending); pending=null;
+    if(t){ t.scrollIntoView(); } else { window.scrollTo(0,0); }
+  }
+  var nav=document.getElementById('nav'), burger=document.getElementById('burger');
+  function closeNav(){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');
+    document.querySelectorAll('.item.open').forEach(function(i){i.classList.remove('open')});
+    if(document.activeElement&&nav.contains(document.activeElement)) document.activeElement.blur();}
+  burger.addEventListener('click',function(){var o=nav.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+  document.querySelectorAll('.item>button').forEach(function(b){
+    b.addEventListener('click',function(){ location.hash=b.dataset.go; if(location.hash==='#'+b.dataset.go) show(); });
+  });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-sec]'); if(!a) return;
+    var sec=a.dataset.sec, href=a.getAttribute('href');
+    if(sec==='contact'||href==='#'){ e.preventDefault(); closeNav(); document.getElementById(sec).scrollIntoView(); return; }
+    pending=sec;
+    if(location.hash===href){ e.preventDefault(); show(); }
+  });
+  window.addEventListener('hashchange',show);
+  show();
+
+  /* capital stack builder: illustrative figures, in $K */
+  var products=[
+    {k:'abl', name:'Invoice financing', lender:'Lender D', why:'Advance on unpaid invoices'},
+    {k:'term',name:'Term loan',            lender:'Lender B', why:'Growth and equipment'},
+    {k:'inv', name:'Inventory financing', lender:'Lender C', why:'Stock and purchasing'},
+    {k:'loc', name:'Line of credit',       lender:'Lender A', why:'Day-to-day working capital'}
+  ];
+  var biz={
+    retail:{label:'Online retailer', amt:{loc:150,inv:220,term:180,abl:120}, on:['loc','inv','term']},
+    rest:{label:'Restaurant group', amt:{loc:80,inv:40,term:250,abl:0}, on:['loc','term']},
+    dist:{label:'Wholesale distributor', amt:{loc:200,inv:350,term:150,abl:600}, on:['loc','inv','abl']}
+  };
+  var cur='retail', on={};
+  var elBiz=document.getElementById('biz'), elStack=document.getElementById('stack'), elPicks=document.getElementById('picks');
+  function money(k){return k>=1000?'$'+(k/1000).toFixed(2).replace(/0$/,'')+'M':'$'+k+'K'}
+  function setBiz(id){cur=id;on={};biz[id].on.forEach(function(k){on[k]=true});render()}
+  function render(){
+    elBiz.innerHTML='';
+    Object.keys(biz).forEach(function(id){
+      var b=document.createElement('button');b.type='button';b.textContent=biz[id].label;
+      b.setAttribute('aria-pressed',id===cur);b.onclick=function(){setBiz(id)};elBiz.appendChild(b);
+    });
+    var a=biz[cur].amt,total=0,n=0;
+    elStack.innerHTML='';elPicks.innerHTML='';
+    products.forEach(function(p){
+      var avail=a[p.k]>0;
+      if(avail&&on[p.k]){
+        total+=a[p.k];n++;
+        var d=document.createElement('div');d.className='layer';d.dataset.k=p.k;
+        d.style.height=Math.min(120,50+a[p.k]*0.11)+'px';
+        d.innerHTML='<strong>'+p.name+'</strong><span>'+money(a[p.k])+', '+p.lender+'</span>';
+        elStack.appendChild(d);
+      }
+    });
+    if(!n){elStack.innerHTML='<div class="empty">Choose at least one need to build a stack.</div>'}
+    products.slice().reverse().forEach(function(p){
+      var avail=a[p.k]>0;
+      var l=document.createElement('label');l.className='pick'+(avail?'':' off');
+      l.innerHTML='<input type="checkbox" id="pk-'+p.k+'"'+(on[p.k]&&avail?' checked':'')+(avail?'':' disabled')+'><span>'+p.why+'<small>'+(avail?p.name+', up to '+money(a[p.k]):'No invoices to finance for this business')+'</small></span>';
+      l.querySelector('input').onchange=function(e){on[p.k]=e.target.checked;render()};
+      elPicks.appendChild(l);
+    });
+    document.getElementById('total').textContent=money(total);
+    document.getElementById('totalnote').textContent=n?n+(n===1?' product from 1 lender':' products from '+n+' lenders')+', one application':'No products selected';
+  }
+  setBiz('retail');
+
+  document.getElementById('lead').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=e.target,note=document.getElementById('formnote');
+    if(!f.name.value.trim()||!f.company.value.trim()||!/^\S+@\S+\.\S+$/.test(f.email.value)){
+      note.textContent='Add your name, a valid work email and your company.';return;}
+    note.textContent='This preview does not send messages yet. Connect the form to your CRM before launch.';
+  });
+})();
+</script>
+</body>
+</html>
