@@ -35,20 +35,20 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
-body{font-feature-settings:'cv11','ss03';margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{font-feature-settings:'cv11','ss03';margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-0.02em;line-height:1.08}
-h1{font-size:clamp(2.4rem,5.2vw,4.1rem);font-weight:800;letter-spacing:-0.045em;line-height:1.02}
-h2{font-size:clamp(1.75rem,3.2vw,2.55rem);font-weight:700;letter-spacing:-0.035em}
+h1{font-size:clamp(2.1rem,3.9vw,3.4rem);font-weight:700;letter-spacing:-0.035em;line-height:1.08}
+h2{font-size:clamp(1.55rem,2.6vw,2.15rem);font-weight:700;letter-spacing:-0.03em;line-height:1.15}
 h3{font-size:1.3rem;font-weight:600;line-height:1.2}
 h4{font-size:1.02rem;font-weight:600;letter-spacing:-0.01em;line-height:1.25}
 p{margin:0}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--l3);outline-offset:2px;border-radius:4px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
-.lede{font-size:1.2rem;color:var(--muted);max-width:56ch}
+.lede{font-size:1.125rem;color:var(--muted);max-width:56ch}
 .muted{color:var(--muted)}
 .small{font-size:.86rem}
-.btn{display:inline-block;font:600 1rem var(--body);padding:.8em 1.25em;border-radius:999px;border:1.5px solid var(--brand);background:var(--brand);color:var(--brand-ink);text-decoration:none;cursor:pointer}
+.btn{display:inline-block;font:600 .94rem/1.2 var(--body);padding:.62em 1.15em;border-radius:999px;border:1.5px solid var(--brand);background:var(--brand);color:var(--brand-ink);text-decoration:none;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--brand)}
 .btn:hover{filter:brightness(1.1)}
 .row{display:flex;flex-wrap:wrap;gap:12px}
@@ -92,7 +92,7 @@ main>section[data-view].on{display:block}
 .band.line{border-top:1px solid var(--line)}
 .head{display:grid;gap:14px;margin-bottom:44px;max-width:62ch}
 .pagehead{padding-top:72px;padding-bottom:56px}
-.pagehead h1{font-size:clamp(2.2rem,4.6vw,3.6rem);max-width:18ch}
+.pagehead h1{font-size:clamp(2rem,3.6vw,3.1rem);max-width:20ch}
 .pagehead .lede{margin-top:18px}
 .grid{display:grid;gap:22px}
 .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
@@ -107,32 +107,33 @@ ul.ticks li{padding-left:22px;position:relative;font-size:.97rem}
 ul.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;height:6px;border-left:2px solid var(--brand);border-bottom:2px solid var(--brand);transform:rotate(-45deg)}
 
 /* hero */
-.hero{padding:64px 0 76px}
-.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero{padding:56px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:start}
 .hero .copy{display:grid;gap:24px}
 @media (max-width:980px){.hero .wrap{grid-template-columns:1fr;gap:40px}}
 
 /* stack builder */
-.builder{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:18px}
+.builder{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:14px;max-width:470px;width:100%;justify-self:end;font-size:.94rem}
+@media (max-width:980px){.builder{justify-self:start}}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
 .seg button{font:500 .88rem var(--body);padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .bwrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end}
 @media (max-width:520px){.bwrap{grid-template-columns:1fr}}
-.stack{display:flex;flex-direction:column;gap:3px;justify-content:flex-end;min-height:330px}
+.stack{display:flex;flex-direction:column;gap:3px;justify-content:flex-end;min-height:230px}
 .layer{color:var(--on-layer);border-radius:6px;padding:9px 12px;display:flex;flex-direction:column;justify-content:center;transition:height .35s ease;overflow:hidden;line-height:1.2}
-.layer strong{font:600 .98rem var(--display)}
-.layer span{font-size:.8rem;opacity:.9;font-variant-numeric:tabular-nums}
+.layer strong{font:600 .88rem var(--display)}
+.layer span{font-size:.75rem;opacity:.9;font-variant-numeric:tabular-nums}
 .layer[data-k="abl"]{background:var(--l4)} .layer[data-k="term"]{background:var(--l3)}
 .layer[data-k="inv"]{background:var(--l2)} .layer[data-k="loc"]{background:var(--l1)}
 .empty{border:1.5px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted);font-size:.9rem}
 .picks{display:grid;gap:8px}
-.pick{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:9px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.9rem;line-height:1.3}
+.pick{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:7px 9px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.82rem;line-height:1.3}
 .pick input{margin-top:3px;accent-color:var(--brand);width:16px;height:16px}
-.pick small{display:block;color:var(--muted);font-size:.8rem}
+.pick small{display:block;color:var(--muted);font-size:.74rem}
 .pick.off{opacity:.55;cursor:not-allowed}
 .total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line);padding-top:14px;flex-wrap:wrap}
-.total b{font:700 2rem var(--display);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.total b{font:700 1.5rem var(--display);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
 
 /* capital infrastructure diagram */
 .kicker{font-weight:600;color:var(--brand);font-size:1rem}
@@ -152,7 +153,7 @@ ul.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;heig
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
 .stats div{display:grid;gap:6px;align-content:start}
-.stats b{font:700 clamp(2.2rem,4vw,3.2rem) var(--display);letter-spacing:-0.04em;line-height:1}
+.stats b{font:700 clamp(2rem,3.2vw,2.6rem) var(--display);letter-spacing:-0.04em;line-height:1}
 .stats p{font-size:.97rem;max-width:30ch}
 .stats small{color:var(--muted);font-size:.78rem}
 @media (max-width:700px){.stats{grid-template-columns:1fr}}
@@ -166,6 +167,17 @@ th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vert
 thead th{font:600 .95rem var(--display);border-bottom:2px solid var(--ink)}
 tbody th{font-weight:600;width:24%}
 td.v{background:var(--surface);font-weight:500}
+table.cmp{border-collapse:separate;border-spacing:0;min-width:640px;font-size:1rem}
+.cmp th,.cmp td{padding:18px 24px;border-bottom:1px solid var(--line);vertical-align:middle}
+.cmp thead th{border-bottom:0;font:600 1.02rem var(--display);padding-top:16px;padding-bottom:16px}
+.cmp thead th.o{color:var(--muted)}
+.cmp thead th.v{background:var(--brand);color:var(--brand-ink);border-radius:14px 14px 0 0}
+.cmp tbody th{width:20%;font-weight:600}
+.cmp td.o{width:32%;color:var(--muted)}
+.cmp td.v{background:var(--surface);border-left:2px solid var(--brand);border-right:2px solid var(--brand);font-weight:500;padding-left:54px;position:relative}
+.cmp td.v::before{content:"";position:absolute;left:24px;top:50%;width:12px;height:7px;margin-top:-7px;border-left:2.5px solid var(--brand);border-bottom:2.5px solid var(--brand);transform:rotate(-45deg)}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td.o{border-bottom:0}
+.cmp tbody tr:last-child td.v{border-bottom:2px solid var(--brand);border-radius:0 0 14px 14px}
 .offers{display:grid;gap:8px}
 .offer{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:.93rem;font-variant-numeric:tabular-nums}
 .offer.no{background:none;color:var(--muted);border-style:dashed}
@@ -264,7 +276,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
           <a href="#products" data-sec="pr-list"><strong>Invoice financing</strong><span>Advance on unpaid invoices</span></a>
           <a href="#products" data-sec="pr-abl"><strong>Asset-based lending</strong><span>Facilities from about $50K, without field exams</span></a>
         </div></div>
-      <div class="item"><button data-go="capital" aria-haspopup="true">Capital</button>
+      <div class="item"><button data-go="capital" aria-haspopup="true">Capital Providers</button>
         <div class="menu">
           <a href="#capital" data-sec="c-net"><strong>Lender network</strong><span>Platform distribution through one connection</span></a>
           <a href="#capital" data-sec="c-lenders"><strong>Why lenders join</strong><span>Matched applications, standardized data, your decision</span></a>
@@ -299,8 +311,8 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
     <div class="wrap">
       <div class="copy">
         <p class="kicker">Capital Infrastructure for platforms</p>
-        <h1>Embed once. Every lender competes for your customers.</h1>
-        <p class="lede">Don't let limited financing options stall your customers' growth. Vyant's multi-lender platform gives them access to more lenders and funding options through one application, embedded inside your product. You earn a revenue share and carry no credit risk.</p>
+        <h1>Unlock the Capital Stack for your Customers.</h1>
+        <p class="lede">Don't let limited financing options stall your customers' growth. Vyant's multi-lender platform gives them access to more lenders and funding options through one application, embedded inside your product. Earn a new revenue stream with no risk of credit losses.</p>
         <div class="row">
           <a class="btn" href="#" data-sec="contact">Book a 20-minute demo</a>
           <a class="btn ghost" href="#home" data-sec="h-launch">See how you launch</a>
@@ -365,35 +377,22 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
   </div>
 
   <div class="band line" id="h-multi">
-    <div class="wrap split">
-      <div>
-        <div class="head">
-          <h2>A panel of lenders behind one application</h2>
-          <p class="lede">When one lender's credit box says no, the application keeps moving. More of your customers get approved, the offers are larger, and the capital behind your program is not capped by one balance sheet.</p>
-        </div>
-        <div class="tablewrap">
-          <table>
-            <thead><tr><th></th><th>One embedded lender</th><th>Vyant lender panel</th></tr></thead>
-            <tbody>
-              <tr><th>Approvals</th><td>One credit box decides</td><td class="v">Each application is checked against every matching program</td></tr>
-              <tr><th>Offer size</th><td>Limited by one lender's appetite</td><td class="v">Lenders compete, and offers can be combined</td></tr>
-              <tr><th>Products</th><td>Usually one</td><td class="v">Five, from lines of credit to invoice financing</td></tr>
-              <tr><th>Capital supply</th><td>One balance sheet</td><td class="v">Banks, fintech lenders and private credit</td></tr>
-              <tr><th>Your integration</th><td>One per lender</td><td class="v">One, for the whole panel</td></tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="wrap">
+      <div class="head">
+        <h2>A panel of lenders behind one application</h2>
+        <p class="lede">When one lender's credit box says no, the application keeps moving. More of your customers get approved, the offers are larger, and the capital behind your program is not capped by one balance sheet.</p>
       </div>
-      <div>
-        <div class="offers" aria-label="Example of offers returned for one application">
-          <div class="app">One application from your customer</div>
-          <div class="fan" aria-hidden="true"></div>
-          <div class="offer no"><span>Lender A</span><span>No credit box match</span><span></span></div>
-          <div class="offer"><span>Lender B</span><span>Revenue-based, 10% fee, 8 months, weekly</span><span></span></div>
-          <div class="offer"><span>Lender C</span><span>Term loan, 15% p.a., 24 months</span><span></span></div>
-          <div class="offer best"><span>Lender D</span><span>Line of credit, Prime + 2%, 18 months</span><span class="tag">Best fit</span></div>
-        </div>
-        <p class="small muted" style="margin-top:14px">Illustrative offers. With a single lender, a decline from Lender A would end here.</p>
+      <div class="tablewrap">
+        <table class="cmp">
+          <thead><tr><th></th><th class="o">One embedded lender</th><th class="v">Vyant lender panel</th></tr></thead>
+          <tbody>
+            <tr><th>Approvals</th><td class="o">One credit box decides</td><td class="v">Each application is checked against every matching program</td></tr>
+            <tr><th>Offer size</th><td class="o">Limited by one lender's appetite</td><td class="v">Lenders compete, and offers can be combined</td></tr>
+            <tr><th>Products</th><td class="o">Usually one</td><td class="v">Five, from lines of credit to invoice financing</td></tr>
+            <tr><th>Capital supply</th><td class="o">One balance sheet</td><td class="v">Banks, fintech lenders and private credit</td></tr>
+            <tr><th>Your integration</th><td class="o">One per lender</td><td class="v">One, for the whole panel</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -589,7 +588,7 @@ POST /v1/offers/{id}/accept</code></div>
   <div class="wrap pagehead" id="c-net">
     <h1>Join the Vyant lender network</h1>
     <p class="lede">Connect your lending programs once and reach small businesses inside the platforms they already run on. Every application arrives with source-connected data and has been matched to your credit box before you see it.</p>
-    <div style="margin-top:26px"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a><span class="muted small">or write to <a href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">capital@vyant.ai</a></span></div></div>
+    <div style="margin-top:26px"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a></div></div>
   </div>
 
   <div class="band tint"><div class="wrap split">
@@ -670,7 +669,7 @@ POST /v1/offers/{id}/accept</code></div>
 
   <div class="band tint"><div class="wrap split">
     <div class="head" style="margin:0"><h2>Bring your programs to the network</h2><p class="lede">Tell us what you lend and we will show you where it fits.</p></div>
-    <div style="align-self:center"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a><span class="muted small">or write to <a href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">capital@vyant.ai</a></span></div></div>
+    <div style="align-self:center"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a></div></div>
   </div></div>
 </section>
 
@@ -780,7 +779,7 @@ POST /v1/offers/{id}/accept</code></div>
       <div><a class="mark" href="#home"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Vyant</a><p class="muted" style="margin-top:10px;max-width:26ch">Capital Infrastructure for platforms. One application, many lenders.</p></div>
       <div><h4>Platforms</h4><ul><li><a href="#platforms" data-sec="p-infra">Capital Infrastructure</a></li><li><a href="#platforms" data-sec="p-launch">Ways to launch</a></li><li><a href="#platforms" data-sec="p-econ">Economics</a></li></ul></div>
       <div><h4>Products</h4><ul><li><a href="#products" data-sec="pr-stack">Capital stack</a></li><li><a href="#products" data-sec="pr-list">All products</a></li><li><a href="#products" data-sec="pr-abl">Asset-based lending</a></li></ul></div>
-      <div><h4>Capital</h4><ul><li><a href="#capital" data-sec="c-lenders">For lenders</a></li><li><a href="#capital" data-sec="c-suite">Underwriting Suite</a></li><li><a href="#capital" data-sec="c-join">How to join</a></li></ul></div>
+      <div><h4>Capital Providers</h4><ul><li><a href="#capital" data-sec="c-lenders">For lenders</a></li><li><a href="#capital" data-sec="c-suite">Underwriting Suite</a></li><li><a href="#capital" data-sec="c-join">How to join</a></li></ul></div>
       <div><h4>Resources</h4><ul><li><a href="#resources" data-sec="r-dev">Developer portal</a></li><li><a href="#resources" data-sec="r-guides">Guides</a></li><li><a href="#resources" data-sec="r-faq">FAQ</a></li></ul></div>
       <div><h4>About</h4><ul><li><a href="#about" data-sec="a-co">Company</a></li><li><a href="#about" data-sec="a-team">Team</a></li><li><a href="#about" data-sec="a-careers">Careers</a></li></ul></div>
     </div>
@@ -850,7 +849,7 @@ POST /v1/offers/{id}/accept</code></div>
       if(avail&&on[p.k]){
         total+=a[p.k];n++;
         var d=document.createElement('div');d.className='layer';d.dataset.k=p.k;
-        d.style.height=Math.min(120,50+a[p.k]*0.11)+'px';
+        d.style.height=Math.min(84,44+a[p.k]*0.07)+'px';
         d.innerHTML='<strong>'+p.name+'</strong><span>'+money(a[p.k])+', '+p.lender+'</span>';
         elStack.appendChild(d);
       }
