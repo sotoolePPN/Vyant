@@ -258,6 +258,10 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 footer a{text-decoration:none;color:var(--muted)}
 footer a:hover{color:var(--ink)}
 footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;max-width:90ch}
+footer .fine{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;margin-top:18px;color:var(--muted);font-size:.82rem}
+footer .fine nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+.legalpage section{padding:28px 0;border-top:1px solid var(--line);display:grid;gap:10px;max-width:70ch;scroll-margin-top:90px}
+.legalpage section p{color:var(--muted)}
 @media (max-width:900px){footer .cols{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -601,14 +605,14 @@ POST /v1/offers/{id}/accept</code></div>
 <section data-view="capital">
   <div class="wrap pagehead" id="c-net">
     <h1>Join the Vyant lender network</h1>
-    <p class="lede">Connect your lending programs once and reach small businesses inside the platforms they already run on. Every application arrives with source-connected data and has been matched to your credit box before you see it.</p>
+    <p class="lede">Connect your lending programs once and reach small businesses inside the platforms they already run on. Every application arrives with source-connected data and has been matched to your credit box.<br>The result is a highly qualified, high-intent application.</p>
     <div style="margin-top:26px"><div class="row" style="align-items:center"><a class="btn" href="mailto:capital@vyant.ai?subject=Join%20the%20Vyant%20lender%20network">Join our Network</a></div></div>
   </div>
 
   <div class="band tint"><div class="wrap split">
     <div class="head" style="margin:0">
-      <h2>What the network is</h2>
-      <p class="lede">A marketplace that connects lenders directly with platform demand. Platforms embed Vyant once. Their customers apply once. Your programs compete for the applications that fit them.</p>
+      <h2>How orchestration works</h2>
+      <p class="lede">Vyant sits between platforms and lenders. When a business applies inside its platform, we gather its sales, banking and accounting data, work out the financing it needs, and route each need to the lender programs whose credit box it fits. You receive only the applications you can fund, and you make the decision on each one.</p>
     </div>
     <div class="offers">
       <div class="app">Platforms: software, payments, marketplaces</div>
@@ -622,7 +626,7 @@ POST /v1/offers/{id}/accept</code></div>
   </div></div>
 
   <div class="band" id="c-lenders"><div class="wrap">
-    <div class="head"><h2>Why lenders join</h2></div>
+    <div class="head"><h2>Why join?</h2></div>
     <div class="grid g3">
       <div class="card"><h3>Distribution at scale</h3><p>One connection reaches every platform on Vyant, in place of broker networks priced per lead.</p></div>
       <div class="card"><h3>Applications that fit</h3><p>You see only applications that match your program, so underwriting time goes to deals you can fund.</p></div>
@@ -631,11 +635,10 @@ POST /v1/offers/{id}/accept</code></div>
       <div class="card"><h3>Standardized data on every file</h3><p>Platform sales, banking, accounting and bureau data arrive in one consistent format, in place of documents collected from the borrower.</p></div>
       <div class="card"><h3>A partner, not a competitor</h3><p>Vyant holds no loans and takes no credit risk, so we never compete with you for the asset.</p></div>
     </div>
-    <div class="stats" style="grid-template-columns:1fr;margin-top:48px"><div><b>93%</b><p>of lenders say declining a creditworthy small business is a missed opportunity. A panel gives those applications somewhere to go, and gives you the ones other lenders could not serve.</p><small>LexisNexis Risk Solutions, 2026 US SMB Credit Risk Report</small></div></div>
   </div></div>
 
   <div class="band tint" id="c-who"><div class="wrap">
-    <div class="head"><h2>Who the network is for</h2></div>
+    <div class="head"><h2>Eligible capital providers</h2></div>
     <div class="grid g3">
       <div class="plain"><h3>Banks and credit unions</h3><p>Grow small business lending beyond the branch footprint, with cash-flow underwriting tools included.</p></div>
       <div class="plain"><h3>Fintech lenders</h3><p>Add embedded distribution across many platforms through a single API connection.</p></div>
@@ -764,8 +767,22 @@ POST /v1/offers/{id}/accept</code></div>
   </div></div>
   <div class="band" id="a-careers"><div class="wrap split">
     <div class="head" style="margin:0"><h2>Careers</h2><p class="lede">We are a small team building credit infrastructure. If that is the work you want, write to us.</p></div>
-    <div class="row" style="align-self:center"><a class="btn" href="#" data-sec="contact">Get in touch</a></div>
+    <div class="row" style="align-self:center"><a class="btn" href="mailto:careers@vyant.ai?subject=Careers%20at%20Vyant">Get in touch</a></div>
   </div></div>
+</section>
+
+<!-- ================= LEGAL ================= -->
+<section data-view="legal">
+  <div class="wrap pagehead">
+    <h1>Legal</h1>
+    <p class="lede">Policies and disclosures for vyant.ai.</p>
+  </div>
+  <div class="wrap legalpage" style="padding-bottom:80px">
+    <section id="l-privacy"><h2>Privacy Policy</h2><p>Our Privacy Policy is being finalized and will be published here.</p></section>
+    <section id="l-terms"><h2>Terms of Use</h2><p>Our Terms of Use are being finalized and will be published here.</p></section>
+    <section id="l-cookies"><h2>Cookies</h2><p>Our Cookie Policy is being finalized and will be published here.</p></section>
+    <section id="l-disclosures"><h2>Disclosures</h2><p>Vyant is not a lender. Financing is provided by partner lenders, who make their own credit decisions. All offers are subject to approval, and terms vary. Examples and figures marked illustrative are not offers of credit. All applications are subject to lender review and approval.</p></section>
+  </div>
 </section>
 
 </main>
@@ -798,13 +815,17 @@ POST /v1/offers/{id}/accept</code></div>
       <div><h4>Resources</h4><ul><li><a href="#resources" data-sec="r-dev">Developer portal</a></li><li><a href="#resources" data-sec="r-guides">Guides</a></li><li><a href="#resources" data-sec="r-faq">FAQ</a></li></ul></div>
       <div><h4>About</h4><ul><li><a href="#about" data-sec="a-co">Company</a></li><li><a href="#about" data-sec="a-team">Team</a></li><li><a href="#about" data-sec="a-careers">Careers</a></li></ul></div>
     </div>
-    <p class="legal">Vyant is not a lender. Financing is provided by partner lenders, each of which makes its own credit decisions. All offers are subject to approval, and terms vary. Examples and figures marked illustrative are not offers of credit. All applications are subject to lender review and approval.</p>
+    <p class="legal">Vyant is not a lender. Financing is provided by partner lenders, who make their own credit decisions. All offers are subject to approval, and terms vary. Examples and figures marked illustrative are not offers of credit. All applications are subject to lender review and approval.</p>
+    <div class="fine">
+      <span>© 2026 Vyant, Inc. All rights reserved.</span>
+      <nav aria-label="Legal"><a href="#legal" data-sec="l-privacy">Privacy Policy</a><a href="#legal" data-sec="l-terms">Terms of Use</a><a href="#legal" data-sec="l-cookies">Cookies</a><a href="#legal" data-sec="l-disclosures">Disclosures</a></nav>
+    </div>
   </div>
 </footer>
 
 <script>
 (function(){
-  var views=['home','platforms','products','capital','resources','about'];
+  var views=['home','platforms','products','capital','resources','about','legal'];
   var pending=null;
   function show(){
     var h=(location.hash||'').replace('#','');
