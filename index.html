@@ -792,6 +792,7 @@ POST /v1/offers/{id}/accept</code></div>
     <div>
       <h2>Add Capital Infrastructure to your platform</h2>
       <p class="l">Tell us about your platform. We will come back with how a program could look for your customer base and which launch approach fits.</p>
+      <p class="l">Prefer email? <a href="mailto:platforms@vyant.ai">platforms@vyant.ai</a></p>
     </div>
     <form id="lead" novalidate>
       <label for="f-name">Name<input id="f-name" name="name" autocomplete="name" required></label>
@@ -932,7 +933,12 @@ POST /v1/offers/{id}/accept</code></div>
     var f=e.target,note=document.getElementById('formnote');
     if(!f.name.value.trim()||!f.company.value.trim()||!/^\S+@\S+\.\S+$/.test(f.email.value)){
       note.textContent='Add your name, a valid work email and your company.';return;}
-    note.textContent='This preview does not send messages yet. Connect the form to your CRM before launch.';
+    var to='platforms@vyant.ai';
+    var body='Name: '+f.name.value.trim()+'\nWork email: '+f.email.value.trim()+'\nCompany: '+f.company.value.trim()+'\nI am a: '+f.type.value+'\n\nI would like to book a 20-minute demo.';
+    var a=document.createElement('a');
+    a.href='mailto:'+to+'?subject='+encodeURIComponent('Demo request: '+f.company.value.trim())+'&body='+encodeURIComponent(body);
+    document.body.appendChild(a);a.click();a.remove();
+    note.textContent='Your email app should open with the request ready to send. If it does not, write to '+to+'.';
   });
 })();
 </script>
