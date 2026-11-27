@@ -158,6 +158,8 @@ ul.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;heig
 .infra .tier ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.93rem}
 .infra .tier li{padding-top:7px;border-top:1px solid var(--line)}
 @media (max-width:900px){.infra .tiers{grid-template-columns:1fr}}
+h2.lines span{display:block}
+@media (min-width:700px){h2.lines span{white-space:nowrap}}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
 .stats div{display:grid;gap:6px;align-content:start}
@@ -356,13 +358,13 @@ footer .fine nav{display:flex;flex-wrap:wrap;gap:6px 20px}
   <div class="band tint">
     <div class="wrap">
       <div class="head">
-        <h2>One lender per platform can't serve every business</h2>
-        <p class="lede">A single credit box and a single product leave many of your customers with no offer, or one that is too small.</p>
+        <h2 class="lines"><span>Every lender has credit restrictions.</span> <span>Why have just one?</span></h2>
+        <p class="lede">Vyant's network of lenders ensures higher eligibility for your customers, higher financing amounts and better terms.</p>
       </div>
       <div class="stats">
-        <div><b>~1 in 2</b><p>small businesses report unmet financing needs.</p><small>Federal Reserve Banks, Small Business Credit Survey</small></div>
-        <div><b>93%</b><p>of lenders say declining a creditworthy small business is a missed opportunity.</p><small>LexisNexis Risk Solutions, 2026 US SMB Credit Risk Report</small></div>
-        <div><b>~6x</b><p>Embedded lending is growing about six times faster than the small business loan market.</p><small>Allied Market Research</small></div>
+        <div><b><span aria-hidden="true">↑</span> Approvals</b><p>More lenders ensures higher approval rates.</p></div>
+        <div><b><span aria-hidden="true">↑</span> Fundings</b><p>More lenders results in higher loan amounts.</p></div>
+        <div><b><span aria-hidden="true">↓</span> Cost</b><p>More lenders means better rates and terms for your customers.</p></div>
       </div>
     </div>
   </div>
@@ -371,7 +373,7 @@ footer .fine nav{display:flex;flex-wrap:wrap;gap:6px 20px}
     <div class="wrap">
       <div class="head">
         <h2>Capital Infrastructure for platforms</h2>
-        <p class="lede">Everything a platform needs to offer capital, in one layer between your platform and the lenders: the technology, the financing products and a turn-key program to run them.</p>
+        <p class="lede">Everything a platform needs to offer capital.<br>Vyant platform enables program configuration, designing the product mix to fit the particular needs of your customers.</p>
       </div>
       <div class="infra">
         <div class="end"><b>Your platform</b><span>Your customers, your brand, your data</span></div>
@@ -379,7 +381,7 @@ footer .fine nav{display:flex;flex-wrap:wrap;gap:6px 20px}
           <h3>Vyant Capital Infrastructure</h3>
           <div class="tiers">
             <div class="tier"><h3>Technology</h3><p>The systems that turn platform data into funded offers.</p>
-              <ul><li>Data aggregation across sales, banking, credit and accounting</li><li>AI Capital Advisor</li><li>Multi-lender orchestration</li><li>Hosted site, SDK and API</li><li>Live Collateral Record</li></ul></div>
+              <ul><li>Hosted site, SDK and API</li><li>Data aggregation across sales, banking, credit and accounting</li><li>AI Capital Advisor</li><li>Multi-lender orchestration</li><li>Live Collateral Record</li></ul></div>
             <div class="tier"><h3>Products</h3><p>Financing across the cash cycle, combined into one stack.</p>
               <ul><li>Lines of credit</li><li>Term loans</li><li>Revenue-based loans</li><li>Inventory financing</li><li>Invoice financing</li></ul></div>
             <div class="tier"><h3>Turn-key program</h3><p>The operating side of a capital business, already in place.</p>
